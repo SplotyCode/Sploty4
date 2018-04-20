@@ -16,4 +16,7 @@ public class CommentReader implements DomReader<DomHtmlParser> {
             parser.setLocked(this);
         }
     }
+
+    @Override public void parseDone() {}
+    
 }

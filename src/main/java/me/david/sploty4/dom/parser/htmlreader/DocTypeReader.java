@@ -25,4 +25,6 @@ public class DocTypeReader implements DomReader<DomHtmlParser> {
                 parser.disableReader(this);
         }
     }
+
+    @Override public void parseDone() {}
 }
