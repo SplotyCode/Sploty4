@@ -1,6 +1,7 @@
 package me.david.sploty4.document;
 
 import me.david.sploty4.document.archive.ZipArchiveDocument;
+import me.david.sploty4.document.text.HtmlDocument;
 import me.david.sploty4.document.text.RawText;
 import me.david.sploty4.io.Connection;
 import me.david.sploty4.util.obj.Pair;
@@ -25,7 +26,9 @@ public class DocumentHandler {
         types.put("text/css", rawText);
         types.put("application/javascript", rawText);
         types.put("application/ecmascript", rawText);
-        types.put("text/html", rawText);
+
+        HtmlDocument htmlDocument = new HtmlDocument();
+        types.put("text/html", htmlDocument);
     }
 
     public Document handleFile(Connection connection){

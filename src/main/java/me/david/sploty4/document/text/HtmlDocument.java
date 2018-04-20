@@ -4,6 +4,7 @@ import me.david.sploty4.document.Document;
 import me.david.sploty4.dom.DomErrorReporter;
 import me.david.sploty4.dom.Node;
 import me.david.sploty4.dom.parser.DomHtmlParser;
+import me.david.sploty4.features.ProblemConclusion;
 import me.david.sploty4.gui.tab.TabHandler;
 import me.david.sploty4.io.Connection;
 import org.apache.commons.io.IOUtils;
@@ -25,7 +26,7 @@ public class HtmlDocument implements Document {
     public void load(TabHandler tab, Connection connection) {
         String content = "";
         try {
-            content = IOUtils.toString(connection.getInputStream(), connection.getEncoding());
+            content = IOUtils.toString(connection.getInputStream(), connection.getCharset());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -33,6 +34,10 @@ public class HtmlDocument implements Document {
         parser.setErrorReporter(errorReporter);
         parser.parse(content);
         html = parser.getBase();
+
+        //ignore infos??
+        if(!errorReporter.getErrors().isEmpty())
+            new ProblemConclusion(errorReporter).build();
     }
 
     @Override
