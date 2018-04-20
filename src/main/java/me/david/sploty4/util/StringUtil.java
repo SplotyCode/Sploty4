@@ -1,5 +1,7 @@
 package me.david.sploty4.util;
 
+import sun.misc.FloatingDecimal;
+
 public final class StringUtil {
 
     public static boolean isEmpty(String str){
@@ -11,5 +13,26 @@ public final class StringUtil {
         int exp = (int) (Math.log(bytes) / Math.log(1024));
         char pre = ("kMGTPE").charAt(exp-1);
         return String.format("%.1f %sB", bytes / Math.pow(1024, exp), pre);
+    }
+
+    public static boolean isNoWhiteSpace(char ch){
+        return ch != Character.MIN_VALUE && ch != ' ' && ch != '\n' && ch != '\r' && ch != '\t';
+    }
+
+    public static boolean isWhiteSpace(char ch){
+        return !isNoWhiteSpace(ch);
+    }
+
+    public static boolean isFloat(String str){
+        try {
+            Float.valueOf(str);
+        } catch (NumberFormatException ex){
+            return false;
+        }
+        return true;
+    }
+
+    public static float toFloat(String str){
+        return FloatingDecimal.parseFloat(str);
     }
 }

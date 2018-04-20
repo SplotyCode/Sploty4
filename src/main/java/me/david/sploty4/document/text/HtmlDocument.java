@@ -5,6 +5,9 @@ import me.david.sploty4.dom.Node;
 import me.david.sploty4.dom.parser.DomHtmlParser;
 import me.david.sploty4.gui.tab.TabHandler;
 import me.david.sploty4.io.Connection;
+import org.apache.commons.io.IOUtils;
+
+import java.io.IOException;
 
 public class HtmlDocument implements Document {
 
@@ -18,7 +21,15 @@ public class HtmlDocument implements Document {
 
     @Override
     public void load(TabHandler tab, Connection connection) {
-
+        String content = "";
+        try {
+            content = IOUtils.toString(connection.getInputStream(), connection.getEncoding());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        parser = new DomHtmlParser();
+        parser.parse(content);
+        html = parser.getBase();
     }
 
     @Override

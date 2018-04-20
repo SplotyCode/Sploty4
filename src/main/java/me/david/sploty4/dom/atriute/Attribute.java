@@ -1,10 +1,10 @@
 package me.david.sploty4.dom.atriute;
 
-public abstract class Attribute {
+public class Attribute {
 
     private final String name;
 
-    protected Attribute(String name) {
+    public Attribute(String name) {
         this.name = name;
     }
 

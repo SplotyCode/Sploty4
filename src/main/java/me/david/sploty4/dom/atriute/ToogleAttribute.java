@@ -7,20 +7,25 @@ public class ToogleAttribute extends ValueAtriute<Boolean> {
     private boolean value;
 
     public ToogleAttribute(String name, String rawValue) {
-        super(name, rawValue);
+        super(name);
         rawValue = rawValue.toLowerCase();
         if(rawValue.equals("on")) value = true;
         else if(rawValue.equals("off")) value = false;
         else throw new DomParseException("Invalid Toggle value: '" + rawValue + "'");
     }
 
+    public ToogleAttribute(String name, Boolean value){
+        super(name);
+        this.value = value;
+    }
+
     @Override
-    public Boolean setValue() {
-        return null;
+    public void setValue(Boolean value) {
+        this.value = value;
     }
 
     @Override
     public Boolean getValue() {
-        return null;
+        return value;
     }
 }
