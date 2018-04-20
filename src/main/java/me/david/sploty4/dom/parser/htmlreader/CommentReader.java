@@ -18,5 +18,5 @@ public class CommentReader implements DomReader<DomHtmlParser> {
     }
 
     @Override public void parseDone() {}
-    
+
 }

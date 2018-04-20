@@ -23,11 +23,15 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
     @Setter private int index = 0;
     @Getter @Setter private boolean skipThis = false, rehandle = false;
     @Getter @Setter private Node base = new BaseNode(), currentParent = base;
-    @Getter @Setter private DomErrorReporter errorReporter = new DomErrorReporter();
+    @Getter @Setter private DomErrorReporter errorReporter = null;
 
     @Override
     public Node parse(String input) {
         content = input;
+        if(errorReporter == null){
+            errorReporter = new DomErrorReporter();
+            System.out.println("[INFO] No Error Reporter was set! Need to create one for this parse!");
+        }
         while (index < content.length()){
             char c = content.charAt(index);
             if(isLocked()) getLocked().readNext(c, this);
