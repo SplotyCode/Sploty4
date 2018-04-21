@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import me.david.sploty4.Sploty;
 import me.david.sploty4.document.Document;
 import me.david.sploty4.document.ErrorDocument;
+import me.david.sploty4.document.text.RawText;
 import me.david.sploty4.features.DownloadManager;
 import me.david.sploty4.features.History;
 import me.david.sploty4.gui.Window;
@@ -228,6 +229,11 @@ public class BrowserTab extends Tab implements TabHandler {
 
     private void load(String url){
         secure.setContextMenu(null);
+        boolean viewSource = false;
+        if(url.startsWith("view-source:")){
+            viewSource = true;
+            url = url.substring(12);
+        }
         if(url.startsWith("about:")) {
             String name = url.substring(6).toLowerCase();
             main.setCenter(Sploty.getGuiManager().getAboutHandler().handle(name));
@@ -260,26 +266,31 @@ public class BrowserTab extends Tab implements TabHandler {
             boolean success = connection.isLocal() || !connection.getUrl().getProtocol().equals("http");
             secure.setTooltip(new Tooltip(success?"Secure -> SSL Verification":"UnSecure -> HTTP Verification"));
             if(success){
-                ContextMenu menu = new ContextMenu();
-                HttpsURLConnection ssl = (HttpsURLConnection) connection.getConnection();
-                if(ssl == null || connection.getError() < -99 && connection.getError() > -200) {
-                    success = false;
-                    menu.getItems().add(new MenuItem("Something wrong with that connection..."));
+                if(connection.isLocal()){
+                    secure.setTooltip(new Tooltip("Local File!"));
                 }else {
-                    try {
-                        menu.getItems().addAll(new MenuItem("CipherSuite: " + (ssl.getCipherSuite() == null ? "None (usually not good :) )" : ssl.getCipherSuite())),
-                                                new MenuItem("PeerPrincipal: " + ssl.getPeerPrincipal().getName()));
-                        menu.getItems().add(new MenuItem("Certificates: "));
-                        for (Certificate cert : ssl.getServerCertificates())
-                            menu.getItems().add(new MenuItem(cert.getType() + " -> " + cert.getPublicKey().getFormat() + " -> " + cert.getPublicKey().getAlgorithm()));
-                    } catch (SSLPeerUnverifiedException e) {
-                        e.printStackTrace();
-                   }
+                    ContextMenu menu = new ContextMenu();
+                    HttpsURLConnection ssl = (HttpsURLConnection) connection.getConnection();
+                    if (ssl == null || connection.getError() < -99 && connection.getError() > -200) {
+                        success = false;
+                        menu.getItems().add(new MenuItem("Something wrong with that connection..."));
+                    } else {
+                        try {
+                            menu.getItems().addAll(new MenuItem("CipherSuite: " + (ssl.getCipherSuite() == null ? "None (usually not good :) )" : ssl.getCipherSuite())),
+                                    new MenuItem("PeerPrincipal: " + ssl.getPeerPrincipal().getName()));
+                            menu.getItems().add(new MenuItem("Certificates: "));
+                            for (Certificate cert : ssl.getServerCertificates())
+                                menu.getItems().add(new MenuItem(cert.getType() + " -> " + cert.getPublicKey().getFormat() + " -> " + cert.getPublicKey().getAlgorithm()));
+                        } catch (SSLPeerUnverifiedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    secure.setContextMenu(menu);
                 }
-                secure.setContextMenu(menu);
             }
             FXUtil.setImage(secure, success?"/icons/alert/success.png":"/icons/alert/warning.png");
-            document = connection.getError() == 200 || connection.getError() == 304?Sploty.getInstance().getDocumentHandler().handleFile(connection):new ErrorDocument();
+            if(viewSource) document = new RawText();
+            else document = connection.getError() == 200 || connection.getError() == 304?Sploty.getInstance().getDocumentHandler().handleFile(connection):new ErrorDocument();
             document.load(this, connection);
             Node pane = document.render(this);
             Platform.runLater(() -> {

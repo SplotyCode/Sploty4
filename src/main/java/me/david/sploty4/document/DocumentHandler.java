@@ -4,7 +4,7 @@ import me.david.sploty4.document.archive.ZipArchiveDocument;
 import me.david.sploty4.document.text.HtmlDocument;
 import me.david.sploty4.document.text.RawText;
 import me.david.sploty4.io.Connection;
-import me.david.sploty4.util.obj.Pair;
+import me.david.sploty4.objects.Pair;
 
 import java.util.HashMap;
 

@@ -1,6 +1,6 @@
 package me.david.sploty4.dom.attriute;
 
-import me.david.sploty4.util.AlmostBoolean;
+import me.david.sploty4.objects.AlmostBoolean;
 import me.david.sploty4.util.StringUtil;
 
 public class StandardAttribute extends ValueAtriute<String> {

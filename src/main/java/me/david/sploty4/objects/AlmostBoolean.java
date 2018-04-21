@@ -1,4 +1,4 @@
-package me.david.sploty4.util;
+package me.david.sploty4.objects;
 
 public enum AlmostBoolean {
 

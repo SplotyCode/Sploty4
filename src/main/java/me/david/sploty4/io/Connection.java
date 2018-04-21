@@ -2,6 +2,7 @@ package me.david.sploty4.io;
 
 import me.david.sploty4.Sploty;
 import me.david.sploty4.constants.AppConstants;
+import me.david.sploty4.objects.Pair;
 import me.david.sploty4.setting.CacheState;
 import me.david.sploty4.setting.settings.CacheSettings;
 import me.david.sploty4.setting.settings.ConnectionSettings;
@@ -11,7 +12,6 @@ import me.david.sploty4.storage.SQLite;
 import me.david.sploty4.util.FileUtil;
 import me.david.sploty4.util.MimeUtil;
 import me.david.sploty4.util.StringUtil;
-import me.david.sploty4.util.obj.Pair;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
