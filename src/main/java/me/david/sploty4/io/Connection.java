@@ -59,6 +59,7 @@ public class Connection {
                 inputStream = new FileInputStream(file);
                 contentType = MimeUtil.getMimeByFile(file);
                 length = file.length();
+                error = 200;
             } catch (FileNotFoundException e) {
                 error = 404;
             }

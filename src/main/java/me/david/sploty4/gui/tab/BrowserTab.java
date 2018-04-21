@@ -257,7 +257,7 @@ public class BrowserTab extends Tab implements TabHandler {
                 }
             }
             connection.connect();
-            boolean success = !(!connection.isLocal() && connection.getUrl().getProtocol().equals("http"));
+            boolean success = connection.isLocal() || !connection.getUrl().getProtocol().equals("http");
             secure.setTooltip(new Tooltip(success?"Secure -> SSL Verification":"UnSecure -> HTTP Verification"));
             if(success){
                 ContextMenu menu = new ContextMenu();
@@ -266,15 +266,15 @@ public class BrowserTab extends Tab implements TabHandler {
                     success = false;
                     menu.getItems().add(new MenuItem("Something wrong with that connection..."));
                 }else {
-          //          try {
-                      //  menu.getItems().addAll(new MenuItem("CipherSuite: " + (ssl.getCipherSuite() == null ? "None (usually not good :) )" : ssl.getCipherSuite())),
-                        //        new MenuItem("PeerPrincipal: " + ssl.getPeerPrincipal().getName()));
+                    try {
+                        menu.getItems().addAll(new MenuItem("CipherSuite: " + (ssl.getCipherSuite() == null ? "None (usually not good :) )" : ssl.getCipherSuite())),
+                                                new MenuItem("PeerPrincipal: " + ssl.getPeerPrincipal().getName()));
                         menu.getItems().add(new MenuItem("Certificates: "));
-//                        for (Certificate cert : ssl.getServerCertificates())
-  //                          menu.getItems().add(new MenuItem(cert.getType() + " -> " + cert.getPublicKey().getFormat() + " -> " + cert.getPublicKey().getAlgorithm()));
-    //                } catch (SSLPeerUnverifiedException e) {
-      //                  e.printStackTrace();
-        //            }
+                        for (Certificate cert : ssl.getServerCertificates())
+                            menu.getItems().add(new MenuItem(cert.getType() + " -> " + cert.getPublicKey().getFormat() + " -> " + cert.getPublicKey().getAlgorithm()));
+                    } catch (SSLPeerUnverifiedException e) {
+                        e.printStackTrace();
+                   }
                 }
                 secure.setContextMenu(menu);
             }

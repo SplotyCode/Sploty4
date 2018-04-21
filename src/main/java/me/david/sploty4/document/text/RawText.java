@@ -26,7 +26,7 @@ public class RawText implements Document {
     @Override
     public void load(TabHandler tab, Connection connection) {
         try {
-            System.out.println(connection.getInputStream().getClass().getSimpleName());
+            //System.out.println(connection.getInputStream().getClass().getSimpleName());
             content = IOUtils.toString(connection.getInputStream(), connection.getCharset());
         } catch (IOException e) {
             e.printStackTrace();

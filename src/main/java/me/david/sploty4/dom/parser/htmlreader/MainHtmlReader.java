@@ -12,8 +12,6 @@ import me.david.sploty4.dom.parser.DomHtmlParser;
 import me.david.sploty4.dom.parser.DomReader;
 import me.david.sploty4.util.StringUtil;
 
-import java.rmi.UnexpectedException;
-
 public class MainHtmlReader implements DomReader<DomHtmlParser> {
 
     private State state = State.TEXT;
@@ -28,11 +26,11 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
         switch (state){
             case TEXT:
                 if(c == '<') {
-                    parser.getCurrentParent().getChilds().add(new TextNode(text, parser.getCurrentParent()));
+                    if(!StringUtil.isEmpty(text)) parser.getCurrentParent().getChilds().add(new TextNode(text, parser.getCurrentParent()));
                     state = State.TAGNAME;
                     text = "";
                 }
-                else text += c;
+                else if(StringUtil.isNoWhiteSpace(c)) text += c;
                 break;
             case TAGNAME:
                 if(c == ' '){
@@ -60,6 +58,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                     state = State.TEXT;
                 } else if (c == '/'){
                     state = State.AUTOCLOSE;
+                    System.out.println("aaa");
                 } else if (StringUtil.isNoWhiteSpace(c)) {
                     state = State.ATRIBUTE_NAME;
                     parser.rehandle();
@@ -68,7 +67,9 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
             case ATRIBUTE_NAME:
                 if (StringUtil.isWhiteSpace(c)) {
                     state = State.AFTER_ATRIBUTE_NAME;
-                } else if (c == '>'){
+                } else if (c == '=') {
+                    state = State.AFTERQUALS;
+                }else if (c == '>'){
                     parser.getCurrentParent().getAttributes().add(new Attribute(name.toLowerCase()));
                     name = "";
                 } else if (c == '/'){
@@ -100,6 +101,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                 }
                 break;
             case VALUE:
+                System.out.println(endChar + " " + c);
                 if (c == endChar || (endChar == Character.MIN_VALUE &&
                         (StringUtil.isWhiteSpace(c) || c == '>' || c == '/'))) {
                     name = name.toLowerCase();
@@ -107,6 +109,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                     if (AttributeHelper.isBoolean(name.toLowerCase()))
                         parser.getCurrentParent().getAttributes().add(new ToogleAttribute(name, value));
                     else parser.getCurrentParent().getAttributes().add(new StandartAttribute(name, value));
+                    name = value = "";
                     state = c == '/'?State.AUTOCLOSE:State.AFTER_TAGNAME;
                     if (AttributeHelper.isSelftClosing(name)) throw new SyntaxException("Attribute '" + name + "' for tag '" + parser.getCurrentParent().getName() + "' should not have a value!");
                 } else value += c;
@@ -115,27 +118,34 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                 if (c == '>') {
                     /* Go one element back */
                     parser.setCurrentParent(parser.getCurrentParent().getParent());
+                    state = State.TEXT;
                 } else if (StringUtil.isNoWhiteSpace(c)){
-                    throw new SyntaxException("Expected > but not '" + c + "'!");
+                    throw new SyntaxException("Expected > but not '" + c + "'!(0)");
                 }
                 break;
             case CLOSESTART:
+                //System.out.println("close start: " + c);
                 if (StringUtil.isNoWhiteSpace(c)) {
                     parser.rehandle();
                     state = State.CLOSENAME;
+                    name = "";
                 }
                 break;
             case CLOSENAME:
-                if (StringUtil.isWhiteSpace(c)) {
+                //System.out.println("close name: " + c);
+                if (StringUtil.isWhiteSpace(c) || c ==  '>') {
+                    parser.rehandle();
                     state = State.CLOSEFINISHED;
                 } else name += c;
                 break;
             case CLOSEFINISHED:
+                //System.out.println("close finished: " + c);
                 if (c == '>') {
-                    if(name.toLowerCase().equals(parser.getCurrentParent().getName())) throw new SyntaxException("Closed '" + name + "' without closing '" + parser.getCurrentParent().getName() + "'!");
+                    if(!name.toLowerCase().equals(parser.getCurrentParent().getName())) throw new SyntaxException("Closed '" + name + "' without closing '" + parser.getCurrentParent().getName() + "'!");
                     parser.setCurrentParent(parser.getCurrentParent().getParent());
                     name = "";
-                } else if (StringUtil.isNoWhiteSpace(c)) throw new SyntaxException("Expected > but not ' + c + '!");
+                    state = State.TEXT;
+                } else if (StringUtil.isNoWhiteSpace(c)) throw new SyntaxException("Expected > but not '" + c + "'!(1)");
                 break;
         }
     }

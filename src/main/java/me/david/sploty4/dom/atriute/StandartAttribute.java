@@ -13,6 +13,8 @@ public class StandartAttribute extends ValueAtriute<String> {
     public StandartAttribute(String name, String value) {
         super(name);
         this.value = value;
+        isFloat = AlmostBoolean.MAYBE;
+        floatValueCached = false;
     }
 
     public boolean isFloat() {

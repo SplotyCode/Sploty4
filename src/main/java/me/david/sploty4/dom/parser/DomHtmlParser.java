@@ -20,7 +20,7 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
     private DomReader<DomHtmlParser> locked;
     @Getter @Setter private List<DomReader<DomHtmlParser>> disabledReaders = new ArrayList<>();
 
-    @Setter private int index = 0;
+    @Setter private int index = 0, line = 1;
     @Getter @Setter private boolean skipThis = false, rehandle = false;
     @Getter @Setter private Node base = new BaseNode(), currentParent = base;
     @Getter @Setter private DomErrorReporter errorReporter = null;
@@ -40,8 +40,8 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
                     reader.readNext(c, this);
                 }catch (Throwable throwable){
                     //TODO Logger, Debugmode????
-                    System.out.println("[DEBUG] Exception was thrown: ");
-                    throwable.printStackTrace();
+                    System.out.println("[DEBUG] Exception was thrown (Index: " + index + " Line: " + line + "): ");
+                    throwable.printStackTrace(System.out);
                     errorReporter.report(throwable);
                 }
                 if(skipThis) {
@@ -50,7 +50,10 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
                 }
             }
             if(rehandle) rehandle = false;
-            else index++;
+            else {
+                if(c == '\n') line++;
+                index++;
+            }
         }
         return base;
     }
@@ -95,12 +98,13 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
 
     @Override
     public void skip(int i) {
+        line += content.substring(index, index + i).split("\r\n|\r|\n").length;
         index += i;
     }
 
     @Override
     public void skip() {
-        index++;
+        skip(1);
     }
 
     @Override
@@ -108,7 +112,8 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
         if(index+next.length() > content.length()) return false;
         for(int i = 0;i < next.length();i++)
             if (content.charAt(i + index) != next.charAt(i)) return false;
-        index += next.length();
+        line += content.substring(index, index + next.length()).split("\r\n|\r|\n").length;
+        index += next.length()-1;
         return true;
     }
 
@@ -117,7 +122,8 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
         if(index+text.length() > content.length()) return false;
         for(int i = 0;i < text.length();i++)
             if (Character.toLowerCase(content.charAt(i + index)) != text.charAt(i)) return false;
-        index += text.length();
+        line += content.substring(index, index + text.length()).split("\r\n|\r|\n").length;
+        index += text.length()-1;
         return true;
     }
 

@@ -1,6 +1,7 @@
 package me.david.sploty4.dom;
 
 import me.david.sploty4.dom.atriute.Attribute;
+import me.david.sploty4.objects.IgnorePrint;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,7 +12,7 @@ public class Node implements Cloneable {
 
     private final String name;
 
-    private Node parent;
+    @IgnorePrint private Node parent;
     private List<Node> childs;
 
     private Set<Attribute> attributes;
@@ -87,14 +88,5 @@ public class Node implements Cloneable {
         if (getParent() != null ? !getParent().equals(node.getParent()) : node.getParent() != null) return false;
         if (getChilds() != null ? !getChilds().equals(node.getChilds()) : node.getChilds() != null) return false;
         return getAttributes() != null ? getAttributes().equals(node.getAttributes()) : node.getAttributes() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + (getParent() != null ? getParent().hashCode() : 0);
-        result = 31 * result + (getChilds() != null ? getChilds().hashCode() : 0);
-        result = 31 * result + (getAttributes() != null ? getAttributes().hashCode() : 0);
-        return result;
     }
 }
