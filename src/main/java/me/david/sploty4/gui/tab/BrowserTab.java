@@ -241,7 +241,7 @@ public class BrowserTab extends Tab implements TabHandler {
             name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
             setTitle(name);
             currentUrl = url;
-            String finalUrl1 = url;
+            String finalUrl1 = viewSource?"view-source:":"" + url;
             Platform.runLater(() -> urlBar.setText(finalUrl1));
             FXUtil.setImage(secure, "/icons/alert/success.png");
             secure.setTooltip(new Tooltip("Secure -> Local File"));
@@ -254,7 +254,7 @@ public class BrowserTab extends Tab implements TabHandler {
                 }
                 setTitle(url);
                 currentUrl = url;
-                final String finalUrl = url;
+                final String finalUrl = viewSource?"view-source:":"" + url;
                 Platform.runLater(() -> urlBar.setText(finalUrl));
                 try {
                     connection = new Connection(new URL(url));

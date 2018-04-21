@@ -41,6 +41,10 @@ public class Window {
         stage.requestFocus();
     }
 
+    public BrowserTab getCurrentTab(){
+        return tabBar.getCurrentTab();
+    }
+
     public MainShortcuts getShortcurts() {
         return shortcurts;
     }
