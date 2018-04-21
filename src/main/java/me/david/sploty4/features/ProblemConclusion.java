@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -33,7 +34,7 @@ public class ProblemConclusion {
 
     public void build() {
         Platform.runLater(() -> {
-            VBox box = new VBox();
+            BorderPane box = new BorderPane();
             Stage stage = new Stage();
             stage.setTitle("Problem with loading the Page!");
             stage.getIcons().add(Sploty.SPLOTY_ICON);
@@ -51,7 +52,8 @@ public class ProblemConclusion {
             actionCol.setCellFactory(new ProblemCellFactory());
             table.getColumns().addAll(typeCol, messageCol, actionCol);
             table.setItems(FXCollections.observableList(errorReporter.getErrors()));
-            box.getChildren().addAll(new Text("Problem while loading the page..."), table);
+            box.setCenter(table);
+            box.setTop(new Text("Problem while loading the page..."));
             stage.show();
             stage.requestFocus();
         });
