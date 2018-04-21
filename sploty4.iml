@@ -22,5 +22,10 @@
     <orderEntry type="library" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
     <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:8.40.11" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.16.20" level="project" />
+    <orderEntry type="library" name="Maven: org.fxmisc.richtext:richtextfx:0.9.0" level="project" />
+    <orderEntry type="library" name="Maven: org.reactfx:reactfx:2.0-M5" level="project" />
+    <orderEntry type="library" name="Maven: org.fxmisc.undo:undofx:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.fxmisc.flowless:flowless:0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.fxmisc.wellbehaved:wellbehavedfx:0.3.3" level="project" />
   </component>
 </module>

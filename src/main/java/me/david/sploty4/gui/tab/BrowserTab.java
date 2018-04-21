@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import me.david.sploty4.Sploty;
 import me.david.sploty4.document.Document;
 import me.david.sploty4.document.ErrorDocument;
+import me.david.sploty4.document.ViewSource;
 import me.david.sploty4.document.text.RawText;
 import me.david.sploty4.features.DownloadManager;
 import me.david.sploty4.features.History;
@@ -289,7 +290,7 @@ public class BrowserTab extends Tab implements TabHandler {
                 }
             }
             FXUtil.setImage(secure, success?"/icons/alert/success.png":"/icons/alert/warning.png");
-            if(viewSource) document = new RawText();
+            if(viewSource) document = new ViewSource();
             else document = connection.getError() == 200 || connection.getError() == 304?Sploty.getInstance().getDocumentHandler().handleFile(connection):new ErrorDocument();
             document.load(this, connection);
             Node pane = document.render(this);
