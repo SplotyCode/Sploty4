@@ -1,4 +1,4 @@
-package me.david.sploty4.dom.atriute;
+package me.david.sploty4.dom.attriute;
 
 public abstract class ValueAtriute<T> extends Attribute {
 

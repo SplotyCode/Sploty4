@@ -2,10 +2,10 @@ package me.david.sploty4.dom.parser.htmlreader;
 
 import me.david.sploty4.document.SyntaxException;
 import me.david.sploty4.dom.Node;
-import me.david.sploty4.dom.atriute.Attribute;
-import me.david.sploty4.dom.atriute.AttributeHelper;
-import me.david.sploty4.dom.atriute.StandartAttribute;
-import me.david.sploty4.dom.atriute.ToogleAttribute;
+import me.david.sploty4.dom.attriute.Attribute;
+import me.david.sploty4.dom.attriute.AttributeHelper;
+import me.david.sploty4.dom.attriute.StandardAttribute;
+import me.david.sploty4.dom.attriute.ToogleAttribute;
 import me.david.sploty4.dom.nodes.Nodes;
 import me.david.sploty4.dom.nodes.TextNode;
 import me.david.sploty4.dom.parser.DomHtmlParser;
@@ -108,7 +108,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                     value = value.toLowerCase();
                     if (AttributeHelper.isBoolean(name.toLowerCase()))
                         parser.getCurrentParent().getAttributes().add(new ToogleAttribute(name, value));
-                    else parser.getCurrentParent().getAttributes().add(new StandartAttribute(name, value));
+                    else parser.getCurrentParent().getAttributes().add(new StandardAttribute(name, value));
                     name = value = "";
                     state = c == '/'?State.AUTOCLOSE:State.AFTER_TAGNAME;
                     if (AttributeHelper.isSelftClosing(name)) throw new SyntaxException("Attribute '" + name + "' for tag '" + parser.getCurrentParent().getName() + "' should not have a value!");

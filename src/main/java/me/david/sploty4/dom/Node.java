@@ -1,6 +1,6 @@
 package me.david.sploty4.dom;
 
-import me.david.sploty4.dom.atriute.Attribute;
+import me.david.sploty4.dom.attriute.Attribute;
 import me.david.sploty4.objects.IgnorePrint;
 
 import java.util.ArrayList;

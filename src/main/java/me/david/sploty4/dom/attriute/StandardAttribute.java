@@ -1,16 +1,16 @@
-package me.david.sploty4.dom.atriute;
+package me.david.sploty4.dom.attriute;
 
 import me.david.sploty4.util.AlmostBoolean;
 import me.david.sploty4.util.StringUtil;
 
-public class StandartAttribute extends ValueAtriute<String> {
+public class StandardAttribute extends ValueAtriute<String> {
 
     private String value;
     private AlmostBoolean isFloat;
     private boolean floatValueCached;
     private float floatValue;
 
-    public StandartAttribute(String name, String value) {
+    public StandardAttribute(String name, String value) {
         super(name);
         this.value = value;
         isFloat = AlmostBoolean.MAYBE;
