@@ -20,6 +20,7 @@ import me.david.sploty4.Sploty;
 import me.david.sploty4.dom.DomErrorReporter;
 import me.david.sploty4.dom.error.ErrorEntry;
 import me.david.sploty4.dom.error.StackErrorEntry;
+import me.david.sploty4.util.StringUtil;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -93,13 +94,7 @@ public class ProblemConclusion {
         alert.setHeaderText("More details about this Report");
         alert.setContentText("Message: " + entry.getMessage() + "\nType: " + entry.getType().name());
 
-        //Exceptions to string...
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        ((StackErrorEntry) entry).getThrowable().printStackTrace(pw);
-        String exceptionText = sw.toString();
-
-        Label label = new Label("The exception stacktrace was:");
+        String exceptionText = StringUtil.fromException(((StackErrorEntry) entry).getThrowable());
 
         TextArea textArea = new TextArea(exceptionText);
         textArea.setEditable(false);
@@ -112,7 +107,7 @@ public class ProblemConclusion {
 
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(label, 0, 0);
+        expContent.add(new Label("The exception stacktrace was:"), 0, 0);
         expContent.add(textArea, 0, 1);
 
         alert.getDialogPane().setExpandableContent(expContent);

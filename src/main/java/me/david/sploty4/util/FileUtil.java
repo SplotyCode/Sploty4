@@ -1,5 +1,6 @@
 package me.david.sploty4.util;
 
+import me.david.sploty4.Sploty;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
@@ -59,7 +60,7 @@ public final class FileUtil {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                Sploty.getLogger().exception(e, "Failed creating File...");
             }
             return file;
         }
@@ -70,7 +71,7 @@ public final class FileUtil {
         try {
             file.createNewFile();
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Failed creating File...");
         }
         return file;
     }

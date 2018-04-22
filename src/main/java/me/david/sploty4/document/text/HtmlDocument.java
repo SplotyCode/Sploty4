@@ -1,6 +1,7 @@
 package me.david.sploty4.document.text;
 
 import javafx.scene.control.TextArea;
+import me.david.sploty4.Sploty;
 import me.david.sploty4.document.Document;
 import me.david.sploty4.dom.DomErrorReporter;
 import me.david.sploty4.dom.Node;
@@ -33,7 +34,7 @@ public class HtmlDocument implements Document {
         try {
             content = IOUtils.toString(connection.getInputStream(), connection.getCharset());
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Failed to read Connection Stream...");
         }
         parser = new DomHtmlParser();
         parser.setErrorReporter(errorReporter);

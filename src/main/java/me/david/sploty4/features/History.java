@@ -23,7 +23,7 @@ public class History implements FileComponent {
                 read(serializer);
             } else historyFile.createNewFile();
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Failed loading/creating History from File");
         }
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             FileSerializer serializer = new FileSerializer();
@@ -31,7 +31,7 @@ public class History implements FileComponent {
                 write(serializer);
                 serializer.writeFile(historyFile);
             } catch (IOException e) {
-                e.printStackTrace();
+                Sploty.getLogger().exception(e, "Failed writing history to file");
             }
         }, "History Save"));
     }

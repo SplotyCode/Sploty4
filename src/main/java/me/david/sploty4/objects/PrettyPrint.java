@@ -1,5 +1,7 @@
 package me.david.sploty4.objects;
 
+import me.david.sploty4.Sploty;
+
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.util.*;
@@ -30,7 +32,7 @@ public class PrettyPrint {
             try {
                 builder.append(field.getName()).append(": ").append(getValue(field, tab)).append("\n").append(prefix);
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                Sploty.getLogger().exception(e, "PrettyPrint has no Access");
             }
         }
         for(int i = 0;i < tab-1;i++) builder.append("    ");

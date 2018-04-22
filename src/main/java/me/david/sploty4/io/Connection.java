@@ -162,7 +162,7 @@ public class Connection {
                 } else error = -3;
                 Sploty.getInstance().getDocumentHandler().getFailed().put(url.getHost() + "/" + url.getPort() + "/" + url.getPath(), System.currentTimeMillis());
                 SQLite.INSTANCE.saveFailed(url.getHost() + "/" + url.getPort() + "/" + url.getPath());
-                e.printStackTrace();
+                Sploty.getLogger().exception(e, "External Connection has thrown IO Exception!");
             }
         }
     }
@@ -180,7 +180,7 @@ public class Connection {
         try {
             FileUtil.toFile(inputStream, file, false);
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Saveing to the cache has thrown exception");
         }
     }
 
@@ -213,7 +213,8 @@ public class Connection {
         try {
             return new FileInputStream(file);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            //imposible
+            Sploty.getLogger().exception(e, "File not found (impossible state)");
         }
         return null;
     }

@@ -71,8 +71,15 @@ public class Sploty extends Application {
         history = new History();
         //System.getProperties().list(System.out);
         guiManager = new GuiManager(stage);
+        Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
         logger.info("Successfully started Sploty!");
     }
+
+    public void stop(){
+        Thread.currentThread().setName("Sploty - Shutdown Thread");
+        SQLite.INSTANCE.disconnect();
+    }
+
 
     public static GuiManager getGuiManager() {
         return guiManager;

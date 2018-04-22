@@ -1,5 +1,6 @@
 package me.david.sploty4.document;
 
+import me.david.sploty4.Sploty;
 import me.david.sploty4.document.archive.ZipArchiveDocument;
 import me.david.sploty4.document.text.HtmlDocument;
 import me.david.sploty4.document.text.RawText;
@@ -37,7 +38,7 @@ public class DocumentHandler {
             try {
                 return document.getClass().newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+                Sploty.getLogger().exception(e, "Failed creating document Instance");
             }
         }
         return new DownloadDocument();

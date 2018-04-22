@@ -40,8 +40,7 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
                 try {
                     reader.readNext(c, this);
                 }catch (Throwable throwable){
-                    Sploty.getLogger().debug("Exception was thrown (Index: " + index + " Line: " + line + "): ");
-                    throwable.printStackTrace(System.out);
+                    Sploty.getLogger().exception(throwable, "Exception was thrown (Index: " + index + " Line: " + line + "): ");
                     errorReporter.report(throwable);
                 }
                 if(skipThis) {

@@ -259,7 +259,7 @@ public class BrowserTab extends Tab implements TabHandler {
                 try {
                     connection = new Connection(new URL(url));
                 } catch (MalformedURLException e) {
-                    e.printStackTrace();
+                    Sploty.getLogger().exception(e, "Failed parsing the address...");
                     return;
                 }
             }
@@ -283,7 +283,7 @@ public class BrowserTab extends Tab implements TabHandler {
                             for (Certificate cert : ssl.getServerCertificates())
                                 menu.getItems().add(new MenuItem(cert.getType() + " -> " + cert.getPublicKey().getFormat() + " -> " + cert.getPublicKey().getAlgorithm()));
                         } catch (SSLPeerUnverifiedException e) {
-                            e.printStackTrace();
+                            Sploty.getLogger().exception(e, "Failed to read SSL Details");
                         }
                     }
                     secure.setContextMenu(menu);

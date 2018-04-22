@@ -1,6 +1,7 @@
 package me.david.sploty4.storage;
 
 import com.google.common.primitives.Longs;
+import me.david.sploty4.Sploty;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -71,7 +72,7 @@ public class FileSerializer {
             bytes = new ArrayList<>(Arrays.asList(ArrayUtils.toObject(IOUtils.toByteArray(fis))));
             fis.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Failed loading file to serializer");
         }
         return this;
     }
@@ -82,7 +83,7 @@ public class FileSerializer {
             IOUtils.write(ArrayUtils.toPrimitive(bytes.toArray(new Byte[bytes.size()])), fos);
             fos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Failed writing serializer to File ");
         }
     }
 

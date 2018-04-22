@@ -1,6 +1,7 @@
 package me.david.sploty4.document;
 
 import javafx.scene.Node;
+import me.david.sploty4.Sploty;
 import me.david.sploty4.gui.tab.TabHandler;
 import me.david.sploty4.io.Connection;
 import org.apache.commons.io.IOUtils;
@@ -28,7 +29,7 @@ public class ViewSource implements Document {
         try {
             content = IOUtils.toString(connection.getInputStream(), connection.getCharset());
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Failed reading content");
         }
     }
 

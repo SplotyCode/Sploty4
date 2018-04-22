@@ -1,9 +1,9 @@
 package me.david.sploty4.document.archive;
 
-import javafx.scene.control.TreeCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import me.david.sploty4.Sploty;
 import me.david.sploty4.document.Document;
 import me.david.sploty4.gui.tab.TabHandler;
 import me.david.sploty4.io.Connection;
@@ -26,7 +26,7 @@ public class ZipArchiveDocument implements Document {
                 stream.closeEntry();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Failed loading Zip");
         }
         return box;
     }
@@ -41,7 +41,7 @@ public class ZipArchiveDocument implements Document {
         try {
             stream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Failed closing Zip Stream");
         }
     }
 }

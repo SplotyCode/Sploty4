@@ -4,6 +4,7 @@ package me.david.sploty4.document.text;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import me.david.sploty4.Sploty;
 import me.david.sploty4.document.Document;
 import me.david.sploty4.gui.tab.TabHandler;
 import me.david.sploty4.io.Connection;
@@ -29,7 +30,7 @@ public class RawText implements Document {
             //System.out.println(connection.getInputStream().getClass().getSimpleName());
             content = IOUtils.toString(connection.getInputStream(), connection.getCharset());
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Failed loading content from Stream...");
         }
     }
 

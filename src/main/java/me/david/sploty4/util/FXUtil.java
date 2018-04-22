@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Labeled;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import me.david.sploty4.Sploty;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +18,7 @@ public final class FXUtil {
             try {
                 is.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                Sploty.getLogger().exception(e, "Failed loading Image in Zip");
             }
         });
     }
@@ -28,7 +29,7 @@ public final class FXUtil {
         try {
             is.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Failed closing Image Stream");
         }
         return image;
     }

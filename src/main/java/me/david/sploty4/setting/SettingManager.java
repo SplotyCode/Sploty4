@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import me.david.sploty4.Sploty;
 import me.david.sploty4.setting.settings.*;
 import me.david.sploty4.storage.FileSerializer;
 
@@ -85,7 +86,7 @@ public class SettingManager {
         try {
             setting.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "Failed loading settings");
         }
         settings.add(setting);
     }
@@ -96,7 +97,7 @@ public class SettingManager {
             try {
                 setting.write(serializer);
             } catch (IOException e) {
-                e.printStackTrace();
+                Sploty.getLogger().exception(e, "Failed saving Settings...");
             }
             serializer.writeFile(setting.getFile());
         }
@@ -109,7 +110,7 @@ public class SettingManager {
             try {
                 setting.read(serializer);
             } catch (IOException e) {
-                e.printStackTrace();
+                Sploty.getLogger().exception(e, "Failed reading Setting File...");
             }
         }
     }

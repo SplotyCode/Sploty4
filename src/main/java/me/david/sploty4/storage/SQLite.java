@@ -39,7 +39,7 @@ public enum SQLite {
             stmt.execute(sql2);
             stmt.close();
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "SQLLite connection failed");
         }
     }
 
@@ -63,7 +63,7 @@ public enum SQLite {
             statement.execute();
             statement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "SQLite Request Failed");
         }
     }
 
@@ -81,7 +81,7 @@ public enum SQLite {
             if(!resultSet.next()) return null;
             return new SiteData(resultSet.getString("etag"), resultSet.getString("lastmodified"));
         } catch (SQLException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "SQLite Request Failed");
         }
         return null;
     }
@@ -99,7 +99,7 @@ public enum SQLite {
             if(!resultSet.next()) return Long.MIN_VALUE;
             return resultSet.getLong("time");
         }catch (SQLException e){
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "SQLite Request Failed");
         }
         return Long.MIN_VALUE;
     }
@@ -121,7 +121,7 @@ public enum SQLite {
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "SQLite Request Failed");
         }
 
     }
@@ -156,7 +156,7 @@ public enum SQLite {
         if(isOpen()) try {
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "SQLite disconnect Failed");
         }
     }
 
@@ -164,7 +164,7 @@ public enum SQLite {
         try {
             return connection != null && !connection.isClosed();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Sploty.getLogger().exception(e, "SQLite Failed checking connection status");
         }
         return false;
     }

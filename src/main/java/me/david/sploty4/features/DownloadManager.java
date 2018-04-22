@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import me.david.sploty4.Sploty;
 import me.david.sploty4.util.FileUtil;
 import me.david.sploty4.util.StringUtil;
 import org.controlsfx.control.PopOver;
@@ -148,7 +149,7 @@ public class DownloadManager {
                     }
                 }, stream, outputFile, false, 1024);
             } catch (IOException e) {
-                e.printStackTrace();
+                Sploty.getLogger().exception(e, "Failed downloading");
                 failed = true;
                 failedMessage = e.getMessage();
                 errorListeners.forEach(listeners -> listeners.error(e.getMessage()));

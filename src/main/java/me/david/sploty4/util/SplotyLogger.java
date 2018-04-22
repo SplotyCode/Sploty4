@@ -44,7 +44,7 @@ public class SplotyLogger {
             });
             root.addHandler(txt);
         } catch (Exception e) {
-            e.printStackTrace();
+            exception(e, "Failed to create Logger");
         }
     }
 
@@ -81,6 +81,14 @@ public class SplotyLogger {
     //TODO debug mode?
     public SplotyLogger debug(String debug){
         info(debug);
+        return this;
+    }
+
+    public SplotyLogger exception(Throwable throwable, String message){
+        debug("Exception Was Thrown: " + message);
+        for(String line : StringUtil.fromException(throwable).split(System.lineSeparator())){
+            debug(line);
+        }
         return this;
     }
 
