@@ -119,13 +119,13 @@ public class BrowserTab extends Tab implements TabHandler {
         undoBut.setOnAction((event -> {
             String site = undo.get(undo.size()-1);
             undo.remove(undo.size()-1);
-            System.out.println("undo: open=" + site + " addredo=" + currentUrl);
+            Sploty.getLogger().info("undo: open=" + site + " addredo=" + currentUrl);
             redo.add(currentUrl);
             openNew(site, true);
         }));
         redoBut.setOnAction((event -> {
             String site = redo.get(redo.size()-1);
-            System.out.println("redo: open=" + site + " addredo=" + currentUrl);
+            Sploty.getLogger().info("redo: open=" + site + " addredo=" + currentUrl);
             redo.remove(redo.size()-1);
             undo.add(currentUrl);
             openNew(site, true);

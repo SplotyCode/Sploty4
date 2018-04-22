@@ -3,6 +3,7 @@ package me.david.sploty4;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import me.david.sploty4.constants.AppConstants;
 import me.david.sploty4.document.DocumentHandler;
 import me.david.sploty4.features.DownloadManager;
 import me.david.sploty4.features.History;
@@ -13,13 +14,14 @@ import me.david.sploty4.storage.FileSerializer;
 import me.david.sploty4.storage.SQLite;
 import me.david.sploty4.storage.StorageHelper;
 import me.david.sploty4.util.FXUtil;
+import me.david.sploty4.util.SplotyLogger;
 
 import java.io.File;
 import java.net.URL;
 import java.security.Security;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
+import java.util.logging.Level;
 
 public class Sploty extends Application {
 
@@ -31,6 +33,7 @@ public class Sploty extends Application {
     private static Sploty instance;
     private static GuiManager guiManager;
     private static SettingManager settingManager = new SettingManager();
+    private static SplotyLogger logger;
     private Executor siteExecutor = Executors.newFixedThreadPool(3);
 
     public static final Image SPLOTY_ICON = FXUtil.getImage("/Sploty.png");
@@ -58,6 +61,9 @@ public class Sploty extends Application {
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 
         directory = new StorageHelper().getSplotyFolder();
+        logger = new SplotyLogger(Level.ALL);
+        logger.printBanner();
+        logger.info("Starting Sploty4 " + AppConstants.VERSION + "...   ");
         settingManager.load();
         SQLite.INSTANCE.connect();
         documentHandler = new DocumentHandler();
@@ -65,6 +71,7 @@ public class Sploty extends Application {
         history = new History();
         //System.getProperties().list(System.out);
         guiManager = new GuiManager(stage);
+        logger.info("Successfully started Sploty!");
     }
 
     public static GuiManager getGuiManager() {
@@ -93,5 +100,9 @@ public class Sploty extends Application {
 
     public Executor getSiteExecutor() {
         return siteExecutor;
+    }
+
+    public static SplotyLogger getLogger() {
+        return logger;
     }
 }

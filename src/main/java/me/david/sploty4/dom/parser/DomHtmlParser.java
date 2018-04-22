@@ -2,6 +2,7 @@ package me.david.sploty4.dom.parser;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.david.sploty4.Sploty;
 import me.david.sploty4.dom.DomErrorReporter;
 import me.david.sploty4.dom.Node;
 import me.david.sploty4.dom.nodes.BaseNode;
@@ -22,7 +23,7 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
 
     @Setter private int index = 0, line = 1;
     @Getter @Setter private boolean skipThis = false, rehandle = false;
-    @Getter @Setter private Node base = new BaseNode(), currentParent = base;
+    @Getter private Node base = new BaseNode(), currentParent = base;
     @Getter @Setter private DomErrorReporter errorReporter = null;
 
     @Override
@@ -30,7 +31,7 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
         content = input;
         if(errorReporter == null){
             errorReporter = new DomErrorReporter();
-            System.out.println("[INFO] No Error Reporter was set! Need to create one for this parse!");
+            Sploty.getLogger().info("[INFO] No Error Reporter was set! Need to create one for this parse!");
         }
         while (index < content.length()){
             char c = content.charAt(index);
@@ -39,8 +40,7 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
                 try {
                     reader.readNext(c, this);
                 }catch (Throwable throwable){
-                    //TODO Logger, Debugmode????
-                    System.out.println("[DEBUG] Exception was thrown (Index: " + index + " Line: " + line + "): ");
+                    Sploty.getLogger().debug("Exception was thrown (Index: " + index + " Line: " + line + "): ");
                     throwable.printStackTrace(System.out);
                     errorReporter.report(throwable);
                 }
@@ -55,7 +55,13 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
                 index++;
             }
         }
+        for(DomReader<DomHtmlParser> reader : readers)
+            reader.parseDone();
         return base;
+    }
+
+    public void setCurrentParent(Node currentParent) {
+        this.currentParent = currentParent;
     }
 
     @Override
@@ -112,7 +118,7 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
         if(index+next.length() > content.length()) return false;
         for(int i = 0;i < next.length();i++)
             if (content.charAt(i + index) != next.charAt(i)) return false;
-        line += content.substring(index, index + next.length()).split("\r\n|\r|\n").length;
+        line += content.substring(index, index + next.length() - 1).split("\r\n|\r|\n").length;
         index += next.length()-1;
         return true;
     }
@@ -122,7 +128,7 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
         if(index+text.length() > content.length()) return false;
         for(int i = 0;i < text.length();i++)
             if (Character.toLowerCase(content.charAt(i + index)) != text.charAt(i)) return false;
-        line += content.substring(index, index + text.length()).split("\r\n|\r|\n").length;
+        line += content.substring(index, index + text.length() - 1).split("\r\n|\r|\n").length;
         index += text.length()-1;
         return true;
     }

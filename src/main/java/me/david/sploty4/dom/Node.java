@@ -1,6 +1,7 @@
 package me.david.sploty4.dom;
 
 import me.david.sploty4.dom.attriute.Attribute;
+import me.david.sploty4.dom.nodes.TagHelper;
 import me.david.sploty4.objects.IgnorePrint;
 
 import java.util.ArrayList;
@@ -75,6 +76,10 @@ public class Node implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new InternalError();
         }
+    }
+
+    public boolean canSelftClose(){
+        return TagHelper.canSelfClose(name);
     }
 
     @Override
