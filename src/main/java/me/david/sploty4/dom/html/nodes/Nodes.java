@@ -1,7 +1,6 @@
-package me.david.sploty4.dom.nodes;
+package me.david.sploty4.dom.html.nodes;
 
-import me.david.sploty4.dom.Node;
-import me.david.sploty4.dom.parser.htmlreader.TagNotSupportedException;
+import me.david.sploty4.dom.html.Node;
 
 public enum Nodes {
 

@@ -1,7 +1,7 @@
-package me.david.sploty4.dom;
+package me.david.sploty4.dom.html;
 
-import me.david.sploty4.dom.attriute.Attribute;
-import me.david.sploty4.dom.nodes.TagHelper;
+import me.david.sploty4.dom.html.attriute.Attribute;
+import me.david.sploty4.dom.html.nodes.TagHelper;
 import me.david.sploty4.objects.IgnorePrint;
 
 import java.util.ArrayList;

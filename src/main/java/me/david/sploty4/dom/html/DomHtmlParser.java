@@ -1,21 +1,21 @@
-package me.david.sploty4.dom.parser;
+package me.david.sploty4.dom.html;
 
 import lombok.Getter;
 import lombok.Setter;
 import me.david.sploty4.Sploty;
 import me.david.sploty4.dom.DomErrorReporter;
-import me.david.sploty4.dom.Node;
-import me.david.sploty4.dom.nodes.BaseNode;
-import me.david.sploty4.dom.nodes.DocTypeNode;
-import me.david.sploty4.dom.parser.htmlreader.CommentReader;
-import me.david.sploty4.dom.parser.htmlreader.DocTypeReader;
-import me.david.sploty4.dom.parser.htmlreader.MainHtmlReader;
+import me.david.sploty4.dom.html.nodes.BaseNode;
+import me.david.sploty4.dom.DomParser;
+import me.david.sploty4.dom.DomReader;
+import me.david.sploty4.dom.html.readers.CommentReader;
+import me.david.sploty4.dom.html.readers.DocTypeReader;
+import me.david.sploty4.dom.html.readers.MainHtmlReader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser>  {
+public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser> {
 
     @Getter private String content;
     private DomReader<DomHtmlParser> locked;

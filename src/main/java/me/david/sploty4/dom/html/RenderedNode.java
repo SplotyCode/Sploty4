@@ -1,4 +1,4 @@
-package me.david.sploty4.dom;
+package me.david.sploty4.dom.html;
 
 public class RenderedNode extends Node {
 

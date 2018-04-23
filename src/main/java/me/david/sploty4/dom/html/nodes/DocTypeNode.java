@@ -1,10 +1,7 @@
-package me.david.sploty4.dom.nodes;
+package me.david.sploty4.dom.html.nodes;
 
 import lombok.Getter;
-import me.david.sploty4.dom.Node;
-
-import java.util.ArrayList;
-import java.util.HashSet;
+import me.david.sploty4.dom.html.Node;
 
 public class DocTypeNode extends Node {
 

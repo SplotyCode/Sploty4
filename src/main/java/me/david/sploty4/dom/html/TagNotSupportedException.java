@@ -1,4 +1,4 @@
-package me.david.sploty4.dom.parser.htmlreader;
+package me.david.sploty4.dom.html;
 
 public class TagNotSupportedException extends RuntimeException {
     public TagNotSupportedException() {

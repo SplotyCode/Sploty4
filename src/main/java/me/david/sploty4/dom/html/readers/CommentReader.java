@@ -1,7 +1,7 @@
-package me.david.sploty4.dom.parser.htmlreader;
+package me.david.sploty4.dom.html.readers;
 
-import me.david.sploty4.dom.parser.DomHtmlParser;
-import me.david.sploty4.dom.parser.DomReader;
+import me.david.sploty4.dom.html.DomHtmlParser;
+import me.david.sploty4.dom.DomReader;
 
 public class CommentReader implements DomReader<DomHtmlParser> {
 

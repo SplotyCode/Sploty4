@@ -1,17 +1,16 @@
-package me.david.sploty4.dom.parser.htmlreader;
+package me.david.sploty4.dom.html.readers;
 
 import me.david.sploty4.Sploty;
 import me.david.sploty4.document.SyntaxException;
-import me.david.sploty4.dom.Node;
-import me.david.sploty4.dom.attriute.Attribute;
-import me.david.sploty4.dom.attriute.AttributeHelper;
-import me.david.sploty4.dom.attriute.StandardAttribute;
-import me.david.sploty4.dom.attriute.ToogleAttribute;
-import me.david.sploty4.dom.nodes.Nodes;
-import me.david.sploty4.dom.nodes.TagHelper;
-import me.david.sploty4.dom.nodes.TextNode;
-import me.david.sploty4.dom.parser.DomHtmlParser;
-import me.david.sploty4.dom.parser.DomReader;
+import me.david.sploty4.dom.html.Node;
+import me.david.sploty4.dom.html.attriute.Attribute;
+import me.david.sploty4.dom.html.attriute.AttributeHelper;
+import me.david.sploty4.dom.html.attriute.StandardAttribute;
+import me.david.sploty4.dom.html.attriute.ToogleAttribute;
+import me.david.sploty4.dom.html.nodes.Nodes;
+import me.david.sploty4.dom.html.nodes.TextNode;
+import me.david.sploty4.dom.html.DomHtmlParser;
+import me.david.sploty4.dom.DomReader;
 import me.david.sploty4.util.StringUtil;
 
 public class MainHtmlReader implements DomReader<DomHtmlParser> {

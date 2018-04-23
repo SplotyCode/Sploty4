@@ -1,4 +1,4 @@
-package me.david.sploty4.dom.parser;
+package me.david.sploty4.dom;
 
 public interface DomReader<T extends DomParser> {
 

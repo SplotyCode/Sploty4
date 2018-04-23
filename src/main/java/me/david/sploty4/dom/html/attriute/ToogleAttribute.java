@@ -1,4 +1,4 @@
-package me.david.sploty4.dom.attriute;
+package me.david.sploty4.dom.html.attriute;
 
 import me.david.sploty4.dom.DomParseException;
 
