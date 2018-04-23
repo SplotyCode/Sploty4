@@ -32,7 +32,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                     state = State.TAGNAME;
                     text = "";
                 }
-                else if(StringUtil.isNoWhiteSpace(c)) text += c;
+                else if(StringUtil.isNoSpecialSpace(c)) text += c;
                 break;
             case TAGNAME:
                 if(c == ' '){
@@ -43,7 +43,6 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                     parser.getCurrentParent().getChilds().add(atributeNode);
                     if(!atributeNode.canSelftClose())
                         parser.setCurrentParent(atributeNode);
-                    atributeNode = null;
                 }else if(c == '>') {
                     Node node = Nodes.byName(name.toLowerCase());
                     node.setParent(parser.getCurrentParent());
@@ -58,8 +57,10 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                 break;
             case AFTER_TAGNAME:
                 if (c == '>') {
-                    atributeNode = null;
                     state = State.TEXT;
+                    if(!atributeNode.canSelftClose())
+                        parser.setCurrentParent(atributeNode);
+                    atributeNode = null;
                 } else if (c == '/'){
                     state = State.AUTOCLOSE;
                 } else if (StringUtil.isNoWhiteSpace(c)) {
@@ -73,7 +74,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                 } else if (c == '=') {
                     state = State.AFTERQUALS;
                 }else if (c == '>'){
-                    parser.getCurrentParent().getAttributes().add(new Attribute(name.toLowerCase()));
+                    atributeNode.getAttributes().add(new Attribute(name.toLowerCase()));
                     name = "";
                 } else if (c == '/'){
                     state = State.AUTOCLOSE;
@@ -81,14 +82,14 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                 break;
             case AFTER_ATRIBUTE_NAME:
                 if (c == '>'){
-                    parser.getCurrentParent().getAttributes().add(new Attribute(name.toLowerCase()));
+                    atributeNode.getAttributes().add(new Attribute(name.toLowerCase()));
                     name = "";
                 } else if (c == '/'){
                     state = State.AUTOCLOSE;
                 } else if (c == '='){
                     state = State.AFTERQUALS;
                 } else if (StringUtil.isNoWhiteSpace(c)){
-                    parser.getCurrentParent().getAttributes().add(new Attribute(name.toLowerCase()));
+                    atributeNode.getAttributes().add(new Attribute(name.toLowerCase()));
                     name = "";
                     state = State.AFTER_TAGNAME;
                     parser.rehandle();
@@ -110,8 +111,8 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                     name = name.toLowerCase();
                     value = value.toLowerCase();
                     if (AttributeHelper.isBoolean(name.toLowerCase()))
-                        parser.getCurrentParent().getAttributes().add(new ToogleAttribute(name, value));
-                    else parser.getCurrentParent().getAttributes().add(new StandardAttribute(name, value));
+                        atributeNode.getAttributes().add(new ToogleAttribute(name, value));
+                    else atributeNode.getAttributes().add(new StandardAttribute(name, value));
                     name = value = "";
                     state = c == '/'?State.AUTOCLOSE:State.AFTER_TAGNAME;
                     if (AttributeHelper.isSelftClosing(name)) throw new SyntaxException("Attribute '" + name + "' for tag '" + parser.getCurrentParent().getName() + "' should not have a value!");
@@ -120,14 +121,16 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
             case AUTOCLOSE:
                 if (c == '>') {
                     /* Go one element back */
-                    if(!parser.getCurrentParent().canSelftClose()) parser.setCurrentParent(parser.getCurrentParent().getParent());
+                    if(atributeNode != null && !atributeNode.canSelftClose()) {
+                        parser.setCurrentParent(parser.getCurrentParent().getParent());
+                    }
+                    atributeNode = null;
                     state = State.TEXT;
                 } else if (StringUtil.isNoWhiteSpace(c)){
                     throw new SyntaxException("Expected > but not '" + c + "'!(0)");
                 }
                 break;
             case CLOSESTART:
-                //System.out.println("close start: " + c);
                 if (StringUtil.isNoWhiteSpace(c)) {
                     parser.rehandle();
                     state = State.CLOSENAME;
@@ -135,14 +138,12 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                 }
                 break;
             case CLOSENAME:
-                //System.out.println("close name: " + c);
                 if (StringUtil.isWhiteSpace(c) || c ==  '>') {
                     parser.rehandle();
                     state = State.CLOSEFINISHED;
                 } else name += c;
                 break;
             case CLOSEFINISHED:
-                //System.out.println("close finished: " + c);
                 if (c == '>') {
                     if(!name.toLowerCase().equals(parser.getCurrentParent().getName())) throw new SyntaxException("Closed '" + name + "' without closing '" + parser.getCurrentParent().getName() + "'!");
                     if(!parser.getCurrentParent().canSelftClose()) parser.setCurrentParent(parser.getCurrentParent().getParent());
@@ -155,11 +156,11 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
 
     @Override
     public void parseDone() {
-        if (StringUtil.isEmpty(text) ||
-           StringUtil.isEmpty(name) ||
-           StringUtil.isEmpty(value) ||
-           atributeNode == null){
-            Sploty.getLogger().warn("MainHtmlReader is not cleaned up... But parse id done text: '" + text + "' name: '" + name + "' value: '" + value + "' attrNode: '" + atributeNode + "'");
+        if (!StringUtil.isEmpty(text) ||
+           !StringUtil.isEmpty(name) ||
+           !StringUtil.isEmpty(value) ||
+           atributeNode != null){
+            Sploty.getLogger().warn("MainHtmlReader is not cleaned up... But parse id done! Text: '" + text + "' name: '" + name + "' value: '" + value + "' attrNode: '" + atributeNode + "'");
         }
     }
 

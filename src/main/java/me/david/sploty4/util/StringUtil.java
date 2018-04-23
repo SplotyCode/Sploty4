@@ -23,6 +23,10 @@ public final class StringUtil {
         return ch != Character.MIN_VALUE && ch != ' ' && ch != '\n' && ch != '\r' && ch != '\t';
     }
 
+    public static boolean isNoSpecialSpace(char ch){
+        return ch != '\n' && ch != '\r' && ch != '\t' && ch != Character.MIN_VALUE;
+    }
+
     public static boolean isWhiteSpace(char ch){
         return !isNoWhiteSpace(ch);
     }
