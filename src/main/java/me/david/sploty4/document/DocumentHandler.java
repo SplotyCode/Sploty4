@@ -2,8 +2,9 @@ package me.david.sploty4.document;
 
 import me.david.sploty4.Sploty;
 import me.david.sploty4.document.archive.ZipArchiveDocument;
+import me.david.sploty4.document.other.DownloadDocument;
 import me.david.sploty4.document.text.HtmlDocument;
-import me.david.sploty4.document.text.RawText;
+import me.david.sploty4.document.text.RawTextDocument;
 import me.david.sploty4.io.Connection;
 import me.david.sploty4.objects.Pair;
 
@@ -22,7 +23,7 @@ public class DocumentHandler {
         types.put("application/java-archive", zipArchiveDocument);
         types.put("application/gzip", zipArchiveDocument);
 
-        RawText rawText = new RawText();
+        RawTextDocument rawText = new RawTextDocument();
         types.put("text/plain", rawText);
         types.put("text/css", rawText);
         types.put("application/javascript", rawText);

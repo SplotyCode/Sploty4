@@ -12,7 +12,7 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 
-public class RawText implements Document {
+public class RawTextDocument implements Document {
 
     private String content;
 

@@ -1,7 +1,8 @@
-package me.david.sploty4.document;
+package me.david.sploty4.document.other;
 
 import javafx.scene.Node;
 import me.david.sploty4.Sploty;
+import me.david.sploty4.document.Document;
 import me.david.sploty4.gui.tab.TabHandler;
 import me.david.sploty4.io.Connection;
 import org.apache.commons.io.IOUtils;
@@ -10,7 +11,7 @@ import org.fxmisc.richtext.StyleClassedTextArea;
 
 import java.io.IOException;
 
-public class ViewSource implements Document {
+public class ViewSourceDocument implements Document {
 
     StyleClassedTextArea textArea = new StyleClassedTextArea();
     String content;

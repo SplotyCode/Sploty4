@@ -1,4 +1,4 @@
-package me.david.sploty4.document;
+package me.david.sploty4.document.other;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import me.david.sploty4.document.Document;
 import me.david.sploty4.gui.tab.TabHandler;
 import me.david.sploty4.io.Connection;
 import me.david.sploty4.util.ErrorUtil;

@@ -10,13 +10,11 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import me.david.sploty4.Sploty;
 import me.david.sploty4.document.Document;
-import me.david.sploty4.document.ErrorDocument;
-import me.david.sploty4.document.ViewSource;
-import me.david.sploty4.document.text.RawText;
+import me.david.sploty4.document.other.ErrorDocument;
+import me.david.sploty4.document.other.ViewSourceDocument;
 import me.david.sploty4.features.DownloadManager;
 import me.david.sploty4.features.History;
 import me.david.sploty4.gui.Window;
@@ -31,7 +29,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.cert.Certificate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BrowserTab extends Tab implements TabHandler {
@@ -290,7 +287,7 @@ public class BrowserTab extends Tab implements TabHandler {
                 }
             }
             FXUtil.setImage(secure, success?"/icons/alert/success.png":"/icons/alert/warning.png");
-            if(viewSource) document = new ViewSource();
+            if(viewSource) document = new ViewSourceDocument();
             else document = connection.getError()/100 == 2 || connection.getError() == 304?Sploty.getInstance().getDocumentHandler().handleFile(connection):new ErrorDocument();
             document.load(this, connection);
             Node pane = document.render(this);

@@ -1,4 +1,4 @@
-package me.david.sploty4.document;
+package me.david.sploty4.document.other;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import me.david.sploty4.Sploty;
+import me.david.sploty4.document.Document;
 import me.david.sploty4.gui.tab.TabHandler;
 import me.david.sploty4.io.Connection;
 import me.david.sploty4.setting.settings.GeneralSettings;
