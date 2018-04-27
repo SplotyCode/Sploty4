@@ -31,7 +31,7 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser> {
         content = input;
         if(errorReporter == null){
             errorReporter = new DomErrorReporter();
-            Sploty.getLogger().info("[INFO] No Error Reporter was set! Need to create one for this parse!");
+            Sploty.getLogger().info("No Error Reporter was set! Need to create one for this parse!");
         }
         while (index < content.length()){
             char c = content.charAt(index);

@@ -53,7 +53,7 @@ public class ProblemConclusion {
             table.getColumns().addAll(typeCol, messageCol, actionCol);
             table.setItems(FXCollections.observableList(errorReporter.getErrors()));
             box.setCenter(table);
-            box.setTop(new Text("Problem while loading the page..."));
+            box.setTop(new Text("Problem while loading the page... (" + errorReporter.getErrors().size() + " entry's)"));
             stage.show();
             stage.requestFocus();
         });

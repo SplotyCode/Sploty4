@@ -114,7 +114,7 @@ public class Connection {
                 }
                 connection.connect();
                 error = ((HttpURLConnection) connection).getResponseCode();
-                if(error != 200 && error != 304) return;
+                if(error/100 != 2 && error != 304) return;
                 encoding = connection.getContentEncoding();
                 contentType = connection.getContentType().replaceAll(" ", "");
                 String[] split = contentType.split(";");

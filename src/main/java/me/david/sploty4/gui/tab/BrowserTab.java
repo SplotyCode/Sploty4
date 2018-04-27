@@ -291,7 +291,7 @@ public class BrowserTab extends Tab implements TabHandler {
             }
             FXUtil.setImage(secure, success?"/icons/alert/success.png":"/icons/alert/warning.png");
             if(viewSource) document = new ViewSource();
-            else document = connection.getError() == 200 || connection.getError() == 304?Sploty.getInstance().getDocumentHandler().handleFile(connection):new ErrorDocument();
+            else document = connection.getError()/100 == 2 || connection.getError() == 304?Sploty.getInstance().getDocumentHandler().handleFile(connection):new ErrorDocument();
             document.load(this, connection);
             Node pane = document.render(this);
             Platform.runLater(() -> {
