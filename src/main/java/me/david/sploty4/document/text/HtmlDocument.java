@@ -10,6 +10,7 @@ import me.david.sploty4.features.ProblemConclusion;
 import me.david.sploty4.gui.tab.TabHandler;
 import me.david.sploty4.io.Connection;
 import me.david.sploty4.objects.PrettyPrint;
+import me.david.sploty4.objects.Timer;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -38,7 +39,10 @@ public class HtmlDocument implements Document {
         }
         parser = new DomHtmlParser();
         parser.setErrorReporter(errorReporter);
+        //TODO: replace timer with a real profiler (multiple section etc)
+        Timer timer = new Timer().start();
         parser.parse(content);
+        System.out.println("Html parsing took: " + timer.getDelay() + "ms");
         html = parser.getBase();
 
         //ignore infos??
