@@ -1,6 +1,8 @@
 package me.david.sploty4.dom.html;
 
+import me.david.sploty4.document.SyntaxException;
 import me.david.sploty4.dom.html.attriute.Attribute;
+import me.david.sploty4.dom.html.attriute.StandardAttribute;
 import me.david.sploty4.dom.html.nodes.TagHelper;
 import me.david.sploty4.objects.IgnorePrint;
 
@@ -55,7 +57,7 @@ public class Node implements Cloneable {
         this.childs = childs;
     }
 
-    public boolean hasAttriute(String name){
+    public boolean hasAttribute(String name){
         for(Attribute attribute : attributes)
             if(attribute.getName().equals(name))
                 return true;
@@ -66,6 +68,17 @@ public class Node implements Cloneable {
         for(Attribute attribute : attributes)
             if(attribute.getName().equals(name))
                 return attribute;
+        return null;
+    }
+
+    public StandardAttribute getStandartAttribute(String name){
+        try {
+            for(Attribute attribute : attributes)
+                if(attribute.getName().equals(name))
+                    return (StandardAttribute) attribute;
+        } catch (ClassCastException ex) {
+            throw new SyntaxException("Not right value type for '" + name + "'!");
+        }
         return null;
     }
 

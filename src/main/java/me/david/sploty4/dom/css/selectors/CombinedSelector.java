@@ -11,6 +11,7 @@ import me.david.sploty4.dom.html.StyleableNode;
 public abstract class CombinedSelector extends CSSSelector {
 
     @Getter @Setter private CSSSelector one, two;
+    @Getter final private char bindChar;
 
     @Override public abstract boolean valid(StyleableNode node, HtmlDocument document);
 
