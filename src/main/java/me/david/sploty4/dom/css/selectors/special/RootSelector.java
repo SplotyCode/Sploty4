@@ -17,5 +17,5 @@ public class RootSelector extends SpecialSelector {
     public boolean valid(StyleableNode node, HtmlDocument document) {
         return node instanceof BaseNode;
     }
-    
+
 }

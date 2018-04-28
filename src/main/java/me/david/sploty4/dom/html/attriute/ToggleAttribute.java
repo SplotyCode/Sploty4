@@ -2,19 +2,21 @@ package me.david.sploty4.dom.html.attriute;
 
 import me.david.sploty4.dom.DomParseException;
 
-public class ToogleAttribute extends ValueAtriute<Boolean> {
+public class ToggleAttribute extends ValueAttribute<Boolean> {
 
     private boolean value;
+    private String rawValue;
 
-    public ToogleAttribute(String name, String rawValue) {
+    public ToggleAttribute(String name, String rawValue) {
         super(name);
+        this.rawValue = rawValue;
         rawValue = rawValue.toLowerCase();
         if(rawValue.equals("on")) value = true;
         else if(rawValue.equals("off")) value = false;
         else throw new DomParseException("Invalid Toggle value: '" + rawValue + "'");
     }
 
-    public ToogleAttribute(String name, Boolean value){
+    public ToggleAttribute(String name, Boolean value){
         super(name);
         this.value = value;
     }
@@ -27,5 +29,10 @@ public class ToogleAttribute extends ValueAtriute<Boolean> {
     @Override
     public Boolean getValue() {
         return value;
+    }
+
+    @Override
+    public String getStringValue() {
+        return rawValue;
     }
 }

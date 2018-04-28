@@ -3,7 +3,7 @@ package me.david.sploty4.dom.html.attriute;
 import me.david.sploty4.objects.AlmostBoolean;
 import me.david.sploty4.util.StringUtil;
 
-public class StandardAttribute extends ValueAtriute<String> {
+public class StandardAttribute extends ValueAttribute<String> {
 
     private String value;
     private AlmostBoolean isFloat;
@@ -40,6 +40,11 @@ public class StandardAttribute extends ValueAtriute<String> {
 
     @Override
     public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String getStringValue() {
         return value;
     }
 }

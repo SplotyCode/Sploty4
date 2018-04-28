@@ -3,6 +3,7 @@ package me.david.sploty4.dom.html;
 import me.david.sploty4.document.SyntaxException;
 import me.david.sploty4.dom.html.attriute.Attribute;
 import me.david.sploty4.dom.html.attriute.StandardAttribute;
+import me.david.sploty4.dom.html.attriute.ValueAttribute;
 import me.david.sploty4.dom.html.nodes.TagHelper;
 import me.david.sploty4.objects.IgnorePrint;
 
@@ -79,6 +80,13 @@ public class Node implements Cloneable {
         } catch (ClassCastException ex) {
             throw new SyntaxException("Not right value type for '" + name + "'!");
         }
+        return null;
+    }
+
+    public String getRawAttribute(String name){
+        for(Attribute attribute : attributes)
+            if(attribute instanceof ValueAttribute)
+                return ((ValueAttribute) attribute).getStringValue();
         return null;
     }
 

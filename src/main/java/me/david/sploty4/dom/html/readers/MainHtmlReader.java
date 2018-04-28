@@ -6,7 +6,7 @@ import me.david.sploty4.dom.html.Node;
 import me.david.sploty4.dom.html.attriute.Attribute;
 import me.david.sploty4.dom.html.attriute.AttributeHelper;
 import me.david.sploty4.dom.html.attriute.StandardAttribute;
-import me.david.sploty4.dom.html.attriute.ToogleAttribute;
+import me.david.sploty4.dom.html.attriute.ToggleAttribute;
 import me.david.sploty4.dom.html.nodes.Nodes;
 import me.david.sploty4.dom.html.nodes.TextNode;
 import me.david.sploty4.dom.html.DomHtmlParser;
@@ -110,7 +110,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                     name = name.toLowerCase();
                     value = value.toLowerCase();
                     if (AttributeHelper.isBoolean(name.toLowerCase()))
-                        atributeNode.getAttributes().add(new ToogleAttribute(name, value));
+                        atributeNode.getAttributes().add(new ToggleAttribute(name, value));
                     else atributeNode.getAttributes().add(new StandardAttribute(name, value));
                     name = value = "";
                     state = c == '/'?State.AUTOCLOSE:State.AFTER_TAGNAME;
