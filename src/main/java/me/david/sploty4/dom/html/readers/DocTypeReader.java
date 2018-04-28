@@ -13,7 +13,7 @@ public class DocTypeReader implements DomReader<DomHtmlParser> {
     public void readNext(char c, DomHtmlParser parser) {
         if(parser.isLocked()){
             if(c == '>'){
-                parser.getCurrentParent().getChilds().add(new DocTypeNode(doctype, parser.getCurrentParent()));
+                parser.getCurrentParent().getChilds().add(new DocTypeNode(doctype, parser.getNewTagID(), parser.getCurrentParent()));
                 parser.setLocked(null);
                 doctype = "";
             }else doctype += c;

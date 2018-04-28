@@ -35,7 +35,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                 break;
             case TAGNAME:
                 if(c == ' '){
-                    atributeNode = Nodes.byName(name.toLowerCase());
+                    atributeNode = Nodes.byName(name.toLowerCase(), parser);
                     atributeNode.setParent(parser.getCurrentParent());
                     name = "";
                     state = State.AFTER_TAGNAME;
@@ -43,7 +43,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                     if(!atributeNode.canSelftClose())
                         parser.setCurrentParent(atributeNode);
                 }else if(c == '>') {
-                    Node node = Nodes.byName(name.toLowerCase());
+                    Node node = Nodes.byName(name.toLowerCase(), parser);
                     node.setParent(parser.getCurrentParent());
                     parser.getCurrentParent().getChilds().add(node);
                     if(!node.canSelftClose())

@@ -15,20 +15,23 @@ import java.util.Set;
 public class Node implements Cloneable {
 
     private final String name;
+    private final long id;
 
     @IgnorePrint private Node parent;
     private List<Node> childs;
 
     private Set<Attribute> attributes;
 
-    public Node(String name) {
+    public Node(String name, long id) {
         this.name = name;
+        this.id = id;
         childs = new ArrayList<>();
         attributes = new HashSet<>();
     }
 
-    public Node(String name, Node parent) {
+    public Node(String name, long id, Node parent) {
         this.name = name;
+        this.id = id;
         this.parent = parent;
         childs = new ArrayList<>();
         attributes = new HashSet<>();
@@ -58,21 +61,21 @@ public class Node implements Cloneable {
         this.childs = childs;
     }
 
-    public boolean hasAttribute(String name){
+    public boolean hasAttribute(String name) {
         for(Attribute attribute : attributes)
             if(attribute.getName().equals(name))
                 return true;
         return false;
     }
 
-    public Attribute getAttribute(String name){
+    public Attribute getAttribute(String name) {
         for(Attribute attribute : attributes)
             if(attribute.getName().equals(name))
                 return attribute;
         return null;
     }
 
-    public StandardAttribute getStandartAttribute(String name){
+    public StandardAttribute getStandardAttribute(String name) {
         try {
             for(Attribute attribute : attributes)
                 if(attribute.getName().equals(name))
@@ -83,7 +86,7 @@ public class Node implements Cloneable {
         return null;
     }
 
-    public String getRawAttribute(String name){
+    public String getRawAttribute(String name) {
         for(Attribute attribute : attributes)
             if(attribute instanceof ValueAttribute)
                 return ((ValueAttribute) attribute).getStringValue();

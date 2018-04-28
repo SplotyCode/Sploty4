@@ -12,6 +12,6 @@ public class IDSelector extends SimpleSelector {
 
     @Override
     public boolean valid(StyleableNode node, HtmlDocument document) {
-        return node.hasAttribute("id") && node.getStandartAttribute("id").getValue().equalsIgnoreCase(select);
+        return node.hasAttribute("id") && node.getStandardAttribute("id").getValue().equalsIgnoreCase(select);
     }
 }

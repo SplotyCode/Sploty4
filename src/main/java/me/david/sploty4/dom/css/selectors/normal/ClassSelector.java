@@ -15,7 +15,7 @@ public class ClassSelector extends SimpleSelector {
     @Override
     public boolean valid(StyleableNode node, HtmlDocument document) {
         if (!node.hasAttribute("class")) return false;
-        String[] classes = node.getStandartAttribute("class").getValue().split(" ");
+        String[] classes = node.getStandardAttribute("class").getValue().split(" ");
         return Arrays.stream(classes).anyMatch(name -> name.equalsIgnoreCase(select));
     }
 }

@@ -11,23 +11,23 @@ public class StyleableNode extends Node {
 
     @Getter @Setter private List<CSSRule> styleRules;
 
-    public StyleableNode(String name) {
-        super(name);
+    public StyleableNode(String name, long id) {
+        super(name, id);
         styleRules = new ArrayList<>();
     }
 
-    public StyleableNode(String name, Node parent) {
-        super(name, parent);
+    public StyleableNode(String name, long id, Node parent) {
+        super(name, id, parent);
         styleRules = new ArrayList<>();
     }
 
-    public StyleableNode(String name, List<CSSRule> styleRules) {
-        super(name);
+    public StyleableNode(String name, long id, List<CSSRule> styleRules) {
+        super(name, id);
         this.styleRules = styleRules;
     }
 
-    public StyleableNode(String name, Node parent, List<CSSRule> styleRules) {
-        super(name, parent);
+    public StyleableNode(String name, long id, Node parent, List<CSSRule> styleRules) {
+        super(name, id, parent);
         this.styleRules = styleRules;
     }
 

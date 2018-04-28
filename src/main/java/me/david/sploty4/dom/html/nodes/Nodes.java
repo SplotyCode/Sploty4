@@ -1,5 +1,6 @@
 package me.david.sploty4.dom.html.nodes;
 
+import me.david.sploty4.dom.html.DomHtmlParser;
 import me.david.sploty4.dom.html.Node;
 
 public enum Nodes {
@@ -20,10 +21,11 @@ public enum Nodes {
         return node.clone();
     }
 
-    public static Node byName(String name){
+    public static Node byName(String name, DomHtmlParser parser){
         for(Nodes node : values())
             if(node.getNode().getName().equals(name))
                 return node.getNewNode();
-        return new Node(name);
+        parser.setCurrentTagID(parser.getCurrentTagID()+1);
+        return new Node(name, parser.getCurrentTagID());
     }
 }
