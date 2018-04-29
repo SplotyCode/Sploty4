@@ -6,9 +6,14 @@ import lombok.Setter;
 import me.david.sploty4.dom.css.CSSSelector;
 
 @AllArgsConstructor
-public abstract class SimpleSelector extends CSSSelector {
+public abstract class SimpleSelector extends CSSSelector implements Cloneable {
 
-    @Getter @Setter protected char indicator;
+    @Getter final protected char indicator;
     @Getter @Setter protected String select;
+
+    public SimpleSelector(char indicator) {
+        this.indicator = indicator;
+    }
+
 
 }

@@ -1,11 +1,13 @@
 package me.david.sploty4.dom.css.selectors.combind;
 
+import lombok.NoArgsConstructor;
 import me.david.sploty4.document.text.HtmlDocument;
 import me.david.sploty4.dom.css.CSSSelector;
 import me.david.sploty4.dom.css.selectors.CombinedSelector;
 import me.david.sploty4.dom.html.Node;
 import me.david.sploty4.dom.html.StyleableNode;
 
+@NoArgsConstructor
 public class AdjacentSiblingSelector extends CombinedSelector {
 
     public AdjacentSiblingSelector(CSSSelector one, CSSSelector two) {
