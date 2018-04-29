@@ -1,5 +1,6 @@
-package me.david.sploty4.dom.css.selectors.normal;
+package me.david.sploty4.dom.css.selectors.simple;
 
+import lombok.NoArgsConstructor;
 import me.david.sploty4.document.text.HtmlDocument;
 import me.david.sploty4.dom.css.selectors.SimpleSelector;
 import me.david.sploty4.dom.html.StyleableNode;
@@ -10,6 +11,9 @@ public class ClassSelector extends SimpleSelector {
 
     public ClassSelector(String select) {
         super('.', select);
+    }
+    public ClassSelector() {
+        super('.');
     }
 
     @Override

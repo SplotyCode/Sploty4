@@ -27,5 +27,6 @@
     <orderEntry type="library" name="Maven: org.fxmisc.undo:undofx:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.fxmisc.flowless:flowless:0.6" level="project" />
     <orderEntry type="library" name="Maven: org.fxmisc.wellbehaved:wellbehavedfx:0.3.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sibvisions.external.jvxfx:dndtabpane:0.1" level="project" />
   </component>
 </module>
