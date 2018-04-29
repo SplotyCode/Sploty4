@@ -94,6 +94,18 @@ public class Node implements Cloneable {
         return null;
     }
 
+    public List<Node> getParents() {
+        List<Node> parents = new ArrayList<>();
+        if(parent == null) return parents;
+
+        Node current = parent;
+        while (current != null) {
+            parents.add(current);
+            current = current.getParent();
+        }
+        return parents;
+    }
+
     public String getRawAttribute(String name) {
         for(Attribute attribute : attributes)
             if(attribute instanceof ValueAttribute)
