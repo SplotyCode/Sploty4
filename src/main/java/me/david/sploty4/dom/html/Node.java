@@ -1,5 +1,7 @@
 package me.david.sploty4.dom.html;
 
+import lombok.Getter;
+import lombok.Setter;
 import me.david.sploty4.document.SyntaxException;
 import me.david.sploty4.dom.html.attriute.Attribute;
 import me.david.sploty4.dom.html.attriute.StandardAttribute;
@@ -14,8 +16,8 @@ import java.util.Set;
 
 public class Node implements Cloneable {
 
-    private final String name;
-    private final long id;
+    @Getter private final String name;
+    @Getter private final long id;
 
     @IgnorePrint private Node parent;
     private List<Node> childs;
@@ -35,10 +37,6 @@ public class Node implements Cloneable {
         this.parent = parent;
         childs = new ArrayList<>();
         attributes = new HashSet<>();
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Set<Attribute> getAttributes() {
