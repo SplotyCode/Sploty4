@@ -84,6 +84,16 @@ public class Node implements Cloneable {
         return null;
     }
 
+    public Node getNodeBefore() {
+        if (parent == null) return null;
+        Node before = null;
+        for (final Node node : parent.getChilds()) {
+            if(node.getId() == id) return before;
+            before = node;
+        }
+        return null;
+    }
+
     public String getRawAttribute(String name) {
         for(Attribute attribute : attributes)
             if(attribute instanceof ValueAttribute)
@@ -100,7 +110,7 @@ public class Node implements Cloneable {
         }
     }
 
-    public boolean canSelftClose(){
+    public boolean canSelfClose(){
         return TagHelper.canSelfClose(name);
     }
 
@@ -111,7 +121,7 @@ public class Node implements Cloneable {
 
         Node node = (Node) o;
 
-        if (getName() != null ? !getName().equals(node.getName()) : node.getName() != null) return false;
+        if (!getName().equals(node.getName())) return false;
         if (getParent() != null ? !getParent().equals(node.getParent()) : node.getParent() != null) return false;
         if (getChilds() != null ? !getChilds().equals(node.getChilds()) : node.getChilds() != null) return false;
         return getAttributes() != null ? getAttributes().equals(node.getAttributes()) : node.getAttributes() == null;

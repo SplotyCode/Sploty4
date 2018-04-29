@@ -14,7 +14,7 @@ public class GeneralSiblingSelector extends CombinedSelector {
 
     @Override
     public boolean valid(StyleableNode node, HtmlDocument document) {
-        if (!two.valid(node, document)) return false;
+        if (!two.valid(node, document) || node.getParent() == null) return false;
         for (Node child : node.getParent().getChilds()) {
             if (!(child instanceof StyleableNode)) continue;
             if (child.getId() == node.getId()) return false;

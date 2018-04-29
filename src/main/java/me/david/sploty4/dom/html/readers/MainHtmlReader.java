@@ -40,13 +40,13 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
                     name = "";
                     state = State.AFTER_TAGNAME;
                     parser.getCurrentParent().getChilds().add(atributeNode);
-                    if(!atributeNode.canSelftClose())
+                    if(!atributeNode.canSelfClose())
                         parser.setCurrentParent(atributeNode);
                 }else if(c == '>') {
                     Node node = Nodes.byName(name.toLowerCase(), parser);
                     node.setParent(parser.getCurrentParent());
                     parser.getCurrentParent().getChilds().add(node);
-                    if(!node.canSelftClose())
+                    if(!node.canSelfClose())
                         parser.setCurrentParent(node);
                     name = "";
                     state = State.TEXT;
@@ -57,7 +57,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
             case AFTER_TAGNAME:
                 if (c == '>') {
                     state = State.TEXT;
-                    if(!atributeNode.canSelftClose())
+                    if(!atributeNode.canSelfClose())
                         parser.setCurrentParent(atributeNode);
                     atributeNode = null;
                 } else if (c == '/'){
@@ -120,7 +120,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
             case AUTOCLOSE:
                 if (c == '>') {
                     /* Go one element back */
-                    if(atributeNode != null && !atributeNode.canSelftClose()) {
+                    if(atributeNode != null && !atributeNode.canSelfClose()) {
                         parser.setCurrentParent(parser.getCurrentParent().getParent());
                     }
                     atributeNode = null;
@@ -145,7 +145,7 @@ public class MainHtmlReader implements DomReader<DomHtmlParser> {
             case CLOSEFINISHED:
                 if (c == '>') {
                     if(!name.toLowerCase().equals(parser.getCurrentParent().getName())) throw new SyntaxException("Closed '" + name + "' without closing '" + parser.getCurrentParent().getName() + "'!");
-                    if(!parser.getCurrentParent().canSelftClose()) parser.setCurrentParent(parser.getCurrentParent().getParent());
+                    if(!parser.getCurrentParent().canSelfClose()) parser.setCurrentParent(parser.getCurrentParent().getParent());
                     name = "";
                     state = State.TEXT;
                 } else if (StringUtil.isNoWhiteSpace(c)) throw new SyntaxException("Expected > but not '" + c + "'!(1)");
