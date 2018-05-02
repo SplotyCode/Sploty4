@@ -233,10 +233,9 @@ public class BrowserTab extends Tab implements TabHandler {
             url = url.substring(12);
         }
         if(url.startsWith("about:")) {
-            String name = url.substring(6).toLowerCase();
-            main.setCenter(Sploty.getGuiManager().getAboutHandler().handle(name));
-            name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
-            setTitle(name);
+            final String name = url.substring(6).toLowerCase();
+            Platform.runLater(() -> main.setCenter(Sploty.getGuiManager().getAboutHandler().handle(name)));
+            setTitle(name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase());
             currentUrl = url;
             String finalUrl1 = viewSource?"view-source:":"" + url;
             Platform.runLater(() -> urlBar.setText(finalUrl1));
