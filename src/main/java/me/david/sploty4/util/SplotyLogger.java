@@ -84,11 +84,15 @@ public class SplotyLogger {
         return this;
     }
 
+    public SplotyLogger debugWarn(String debug){
+        warn(debug);
+        return this;
+    }
+
     public SplotyLogger exception(Throwable throwable, String message){
-        debug("Exception Was Thrown: " + message);
-        for(String line : StringUtil.fromException(throwable).split(System.lineSeparator())){
-            debug(line);
-        }
+        debugWarn("Exception Was Thrown: " + message);
+        for(String line : StringUtil.fromException(throwable).split(System.lineSeparator()))
+            debugWarn(line);
         return this;
     }
 
