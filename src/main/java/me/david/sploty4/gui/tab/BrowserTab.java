@@ -311,12 +311,6 @@ public class BrowserTab extends Tab implements TabHandler {
         return getAbsoluteRect(node);
     }
 
-    private boolean betweenX(Rectangle2D r1, Rectangle2D r2, double xPoint) {
-        double lowerBound = r1.getMinX() + r1.getWidth() / 2;
-        double upperBound = r2.getMaxX() - r2.getWidth() / 2;
-        return xPoint >= lowerBound && xPoint <= upperBound;
-    }
-
     @Override
     public void setTitle(String title) {
         if(currentHistory != null) currentHistory.setTitle(title);

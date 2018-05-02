@@ -1,6 +1,7 @@
 package me.david.sploty4.gui;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -13,8 +14,12 @@ import me.david.sploty4.gui.shortCurts.MainShortcuts;
 import me.david.sploty4.gui.tab.BrowserTab;
 import me.david.sploty4.gui.tab.TabList;
 import me.david.sploty4.setting.settings.GeneralSettings;
+import me.david.sploty4.storage.FileComponent;
+import me.david.sploty4.storage.FileSerializer;
 
-public class Window {
+import java.io.IOException;
+
+public class Window implements FileComponent {
 
     private Stage stage;
     private Scene scene;
@@ -29,6 +34,23 @@ public class Window {
         tabBar = new TabList(this, tabsPane);
         tabBar.getTabs().addAll(tabs);
         if(tabs.length == 0) tabBar.getTabs().add(new BrowserTab(tabBar, ((GeneralSettings) Sploty.getSettingManager().getSettingByClass(GeneralSettings.class)).getDefaultsite().toExternalForm()));
+        buildGui();
+    }
+
+    public Window(Stage stage, FileSerializer serializer) {
+        this.stage = stage;
+        tabsPane = new StackPane();
+        tabBar = new TabList(this, tabsPane);
+        try {
+            read(serializer);
+        } catch (IOException e) {
+            Sploty.getLogger().exception(e, "Failed reading from Session File");
+        }
+        if(tabBar.getTabs().size() == 0) tabBar.getTabs().add(new BrowserTab(tabBar, ((GeneralSettings) Sploty.getSettingManager().getSettingByClass(GeneralSettings.class)).getDefaultsite().toExternalForm()));
+        buildGui();
+    }
+
+    private void buildGui() {
         tabsPane.getChildren().addAll(tabBar);
         VBox box = new VBox();
         box.getChildren().addAll(menuBar, tabsPane);
@@ -67,5 +89,24 @@ public class Window {
 
     public TabList getTabBar() {
         return tabBar;
+    }
+
+    @Override
+    public void read(final FileSerializer serializer) throws IOException {
+        int size = serializer.readVarInt(), selected = serializer.readVarInt();
+
+        for (int i = 0;i < size;i++)
+            tabBar.getTabs().add(new BrowserTab(tabBar, serializer.readString()));
+
+        tabBar.getSelectionModel().select(selected);
+    }
+
+    @Override
+    public void write(final FileSerializer serializer) throws IOException {
+        serializer.writeVarInt(tabBar.getTabs().size());
+        serializer.writeVarInt(tabBar.getSelectionModel().getSelectedIndex());
+
+        for (final Tab tab : tabBar.getTabs())
+            serializer.writeString(((BrowserTab) tab).getCurrentUrl());
     }
 }
