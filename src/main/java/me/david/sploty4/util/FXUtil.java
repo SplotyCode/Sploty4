@@ -12,18 +12,20 @@ import java.io.InputStream;
 public final class FXUtil {
 
     public static void setImage(Labeled label, String image){
-        Platform.runLater(() -> {
+        if (Platform.isFxApplicationThread()) loadImage(label, image);
+        else Platform.runLater(() -> loadImage(label, image));
+    }
 
-            try {
-                InputStream is = FXUtil.class.getResourceAsStream(image);
-                if (is != null && is.available() <= 20)
-                    Sploty.getLogger().warn("InputStream seam to be invalid: " + image + " " + is.toString());
-                label.setGraphic(new ImageView(new Image(is)));
-                is.close();
-            } catch (IOException e) {
-                Sploty.getLogger().exception(e, "Failed loading Image in Jar");
-            }
-        });
+    private static void loadImage(Labeled label, String image) {
+        try {
+            InputStream is = FXUtil.class.getResourceAsStream(image);
+            if (is != null && is.available() <= 20)
+                Sploty.getLogger().warn("InputStream seam to be invalid: " + image + " " + is.toString());
+            label.setGraphic(new ImageView(new Image(is)));
+            is.close();
+        } catch (IOException e) {
+            Sploty.getLogger().exception(e, "Failed loading Image in Jar");
+        }
     }
 
     public static Image getImage(String loc){
