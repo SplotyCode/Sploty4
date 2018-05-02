@@ -225,7 +225,8 @@ public class BrowserTab extends Tab implements TabHandler {
         Sploty.getInstance().getSiteExecutor().execute(() -> load(currentUrl));
     }
 
-    private void load(String url){
+    private void load(String url) {
+        FXUtil.setImage(secure, "/icons/load/waiting.gif");
         secure.setContextMenu(null);
         boolean viewSource = false;
         if(url.startsWith("view-source:")){
@@ -239,8 +240,6 @@ public class BrowserTab extends Tab implements TabHandler {
             currentUrl = url;
             String finalUrl1 = viewSource?"view-source:":"" + url;
             Platform.runLater(() -> urlBar.setText(finalUrl1));
-            FXUtil.setImage(secure, "/icons/alert/success.png");
-            secure.setTooltip(new Tooltip("Secure -> Local File"));
         } else {
             if(url.startsWith("file://")){
                 connection = new Connection(new File(url.substring(7)));
@@ -260,12 +259,14 @@ public class BrowserTab extends Tab implements TabHandler {
                 }
             }
             connection.connect();
-            boolean success = connection.isLocal() || !connection.getUrl().getProtocol().equals("http");
+            boolean success = connection.isLocal() || url.startsWith("about:") || !connection.getUrl().getProtocol().equals("http");
             secure.setTooltip(new Tooltip(success?"Secure -> SSL Verification":"UnSecure -> HTTP Verification"));
             if(success){
                 if(connection.isLocal()){
                     secure.setTooltip(new Tooltip("Local File!"));
-                }else {
+                } else if(url.startsWith("about:")) {
+                    secure.setTooltip(new Tooltip("Internal Site!"));
+                } else {
                     ContextMenu menu = new ContextMenu();
                     HttpsURLConnection ssl = (HttpsURLConnection) connection.getConnection();
                     if (ssl == null || connection.getError() < -99 && connection.getError() > -200) {
@@ -288,7 +289,7 @@ public class BrowserTab extends Tab implements TabHandler {
                     secure.setContextMenu(menu);
                 }
             }
-            FXUtil.setImage(secure, success?"/icons/alert/success.png":"/icons/alert/warning.png");
+            FXUtil.setImage(secure, success?"/icons/load/okay.gif":"/icons/load/problem.gif");
             if(viewSource) document = new ViewSourceDocument();
             else document = connection.getError()/100 == 2 || connection.getError() == 304?Sploty.getInstance().getDocumentHandler().handleFile(connection):new ErrorDocument();
             document.load(this, connection);
@@ -297,6 +298,7 @@ public class BrowserTab extends Tab implements TabHandler {
                 main.setCenter(pane);
                 list.getWindow().getTabBar().requestLayout();
             });
+            FXUtil.setImage(secure, success?"/icons/alert/success.png":"/icons/alert/warning.png");
         }
     }
 

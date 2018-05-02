@@ -13,12 +13,15 @@ public final class FXUtil {
 
     public static void setImage(Labeled label, String image){
         Platform.runLater(() -> {
-            InputStream is = FXUtil.class.getResourceAsStream(image);
-            label.setGraphic(new ImageView(new Image(is)));
+
             try {
+                InputStream is = FXUtil.class.getResourceAsStream(image);
+                if (is != null && is.available() <= 20)
+                    Sploty.getLogger().warn("InputStream seam to be invalid: " + image + " " + is.toString());
+                label.setGraphic(new ImageView(new Image(is)));
                 is.close();
             } catch (IOException e) {
-                Sploty.getLogger().exception(e, "Failed loading Image in Zip");
+                Sploty.getLogger().exception(e, "Failed loading Image in Jar");
             }
         });
     }
