@@ -145,7 +145,7 @@ public class BrowserTab extends Tab implements TabHandler {
             event.consume();
         });
 
-        label.setOnDragDetected(event -> {
+        /*label.setOnDragDetected(event -> {
             Dragboard dragboard = label.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent clipboardContent = new ClipboardContent();
             clipboardContent.putString(TabList.DRAG_KEY);
@@ -180,7 +180,7 @@ public class BrowserTab extends Tab implements TabHandler {
                                 for(int i = 0; i < tabBar.getTabs().size() - 1; i++) {
                                     Tab leftTab = tabBar.getTabs().get(i);
                                     Tab rightTab = tabBar.getTabs().get(i + 1);
-                                    if(leftTab instanceof DraggableTab && rightTab instanceof DraggableTab) {
+                                    if(leftTab instanceof BrowserTab && rightTab instanceof BrowserTab) {
                                         Rectangle2D leftTabRect = getAbsoluteRect(leftTab);
                                         Rectangle2D rightTabRect = getAbsoluteRect(rightTab);
                                         if(betweenX(leftTabRect, rightTabRect, point.getX())) {
@@ -200,7 +200,7 @@ public class BrowserTab extends Tab implements TabHandler {
                 Window window = new Window(new Stage(), tab);
                 Sploty.getGuiManager().getWindows().add(window);
             }
-        });
+        });*/
         Sploty.getInstance().getSiteExecutor().execute(() -> load(url));
     }
 
@@ -271,7 +271,10 @@ public class BrowserTab extends Tab implements TabHandler {
                     HttpsURLConnection ssl = (HttpsURLConnection) connection.getConnection();
                     if (ssl == null || connection.getError() < -99 && connection.getError() > -200) {
                         success = false;
-                        menu.getItems().add(new MenuItem("Something wrong with that connection..."));
+                        menu.getItems().add(new MenuItem("SSL is invalid"));
+                    } else if(connection.getError() < 1) {
+                        success = true;
+                        menu.getItems().add(new MenuItem("Failed loading Site = No Security Errors"));
                     } else {
                         try {
                             menu.getItems().addAll(new MenuItem("CipherSuite: " + (ssl.getCipherSuite() == null ? "None (usually not good :) )" : ssl.getCipherSuite())),

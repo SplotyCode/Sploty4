@@ -2,6 +2,7 @@ package me.david.sploty4.gui;
 
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -20,14 +21,17 @@ public class Window {
     private MenuManager menuBar = new MenuManager(this);
     private MainShortcuts shortcurts;
     private TabList tabBar;
+    private StackPane tabsPane;
 
     public Window(Stage stage, BrowserTab... tabs){
         this.stage = stage;
-        tabBar = new TabList(this);
+        tabsPane = new StackPane();
+        tabBar = new TabList(this, tabsPane);
         tabBar.getTabs().addAll(tabs);
         if(tabs.length == 0) tabBar.getTabs().add(new BrowserTab(tabBar, ((GeneralSettings) Sploty.getSettingManager().getSettingByClass(GeneralSettings.class)).getDefaultsite().toExternalForm()));
+        tabsPane.getChildren().addAll(tabBar);
         VBox box = new VBox();
-        box.getChildren().addAll(menuBar, tabBar);
+        box.getChildren().addAll(menuBar, tabsPane);
         scene = new Scene(box, 400, 350);
         shortcurts = new MainShortcuts(this);
         scene.setFill(Color.OLDLACE);

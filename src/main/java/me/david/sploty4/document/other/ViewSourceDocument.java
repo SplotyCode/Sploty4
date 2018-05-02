@@ -20,7 +20,7 @@ public class ViewSourceDocument implements Document {
     public Node render(TabHandler tab) {
         textArea.setWrapText(true);
         textArea.setEditable(false);
-        textArea.replaceText(0, 0, content);
+        textArea.replaceText(content);
         textArea.setParagraphGraphicFactory(LineNumberFactory.get(textArea));
         return textArea;
     }

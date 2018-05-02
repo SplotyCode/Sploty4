@@ -19,10 +19,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLHandshakeException;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.zip.GZIPInputStream;
@@ -147,14 +144,15 @@ public class Connection {
                 if(ramCacheSetting.getWhen() == CacheState.ALWAYS)
                     Sploty.getInstance().getDocumentHandler().getRamCache().put(url.getHost() + "/" + url.getPort() + "/" + url.getPath(), new Pair<>(ArrayUtils.toObject(IOUtils.toByteArray(inputStream)), System.currentTimeMillis()));
             } catch (IOException e) {
-                if(e instanceof UnknownHostException) error = -2;
-                else if(e instanceof SSLHandshakeException) {
-                    if(e.getMessage().contains("timestamp check failed")) error = -100;
-                    else if(e.getMessage().contains("No subject alternative DNS name matching")) error = -101;
-                    else if(e.getMessage().contains("unable to find valid certification path to requested target")) error = -102;
-                    else if(e.getMessage().contains("Certificate has been revoked")) error = -103;
-                    else if(e.getMessage().contains("DHPublicKey does not comply to algorithm constraints")) error = -105;
-                    else if(e.getMessage().contains("handshake_failure")) error = -106;
+                if (e instanceof SocketTimeoutException) error = -1;
+                else if (e instanceof UnknownHostException) error = -2;
+                else if (e instanceof SSLHandshakeException) {
+                    if (e.getMessage().contains("timestamp check failed")) error = -100;
+                    else if (e.getMessage().contains("No subject alternative DNS name matching")) error = -101;
+                    else if (e.getMessage().contains("unable to find valid certification path to requested target")) error = -102;
+                    else if (e.getMessage().contains("Certificate has been revoked")) error = -103;
+                    else if (e.getMessage().contains("DHPublicKey does not comply to algorithm constraints")) error = -105;
+                    else if (e.getMessage().contains("handshake_failure")) error = -106;
                     else error = -199;
                 }else if(e instanceof SSLException) {
                     if(e.getMessage().contains("Could not generate DH keypair")) error = -104;

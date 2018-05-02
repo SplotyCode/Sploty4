@@ -7,7 +7,7 @@ public final class ErrorUtil {
     private static HashMap<Integer, String> errorCodes = new HashMap<>();
 
     static {
-        errorCodes.put(-1, "Times Out");
+        errorCodes.put(-1, "Timed Out");
         errorCodes.put(-2, "Dns Error");
         errorCodes.put(-3, "General IO Error");
         errorCodes.put(-4, "Cached Error");
