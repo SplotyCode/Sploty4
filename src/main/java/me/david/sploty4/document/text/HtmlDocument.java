@@ -1,6 +1,7 @@
 package me.david.sploty4.document.text;
 
 import javafx.scene.control.TextArea;
+import lombok.Getter;
 import me.david.sploty4.Sploty;
 import me.david.sploty4.document.Document;
 import me.david.sploty4.dom.DomErrorReporter;
@@ -17,9 +18,9 @@ import java.io.IOException;
 
 public class HtmlDocument implements Document {
 
-    private Node html;
-    private DomHtmlParser parser;
-    private DomErrorReporter errorReporter = new DomErrorReporter();
+    @Getter private Node html;
+    @Getter private DomHtmlParser parser;
+    @Getter private DomErrorReporter errorReporter = new DomErrorReporter();
 
     @Override
     public javafx.scene.Node render(TabHandler tab) {

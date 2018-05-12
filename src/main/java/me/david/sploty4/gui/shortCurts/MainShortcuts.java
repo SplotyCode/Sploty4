@@ -16,11 +16,22 @@ public class MainShortcuts {
         add(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN), () -> window.getTabBar().getCurrentTab().getUrlBar().requestFocus());
         add(new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN), () -> window.getTabBar().getCurrentTab().reload());
         add(new KeyCodeCombination(KeyCode.F5), () -> window.getTabBar().getCurrentTab().reload());
+        window.getScene().addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> {
+            KeyCodeCombination keyCode = new KeyCodeCombination(KeyCode.TAB, KeyCombination.CONTROL_DOWN);
+            if (keyCode.match(keyEvent)) {
+                keyEvent.consume();
+                if (keyEvent.isShiftDown()) window.getTabBar().getSelectionModel().selectPrevious();
+                else window.getTabBar().getSelectionModel().selectNext();
+            }
+        });
     }
 
     private void add(KeyCombination key, Runnable runnable){
         window.getScene().addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> {
-            if(key.match(keyEvent)) runnable.run();
+            if(key.match(keyEvent)) {
+                runnable.run();
+                keyEvent.consume();
+            }
         });
     }
 }

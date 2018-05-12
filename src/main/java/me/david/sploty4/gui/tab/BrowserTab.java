@@ -30,17 +30,17 @@ import java.util.List;
 
 public class BrowserTab extends Tab implements TabHandler {
 
-    private TabList list;
+    @Getter private TabList list;
     private Label label;
-    private Document document;
-    private Connection connection;
+    @Getter private Document document;
+    @Getter private Connection connection;
     @Getter private boolean viewSource;
 
     private BorderPane main, addressBar;
     private HBox toolBox = new HBox();
     @Getter private SplitPane split = new SplitPane();
-    private TextField urlBar = new TextField();
-    private Button download = new Button();
+    @Getter private TextField urlBar = new TextField();
+    @Getter private Button download = new Button();
     private Button go = new Button();
     private HBox left = new HBox();
     private Button secure = new Button();
@@ -82,7 +82,7 @@ public class BrowserTab extends Tab implements TabHandler {
     private ContextMenu redoMenu = new ContextMenu();
     private ContextMenu undoMenu = new ContextMenu();
 
-    private String currentUrl;
+    @Getter private String currentUrl;
     private History.HistoryEntry currentHistory;
 
     @Getter @Setter private Debugger debugger;
@@ -340,27 +340,4 @@ public class BrowserTab extends Tab implements TabHandler {
         return list.getWindow().getStage();
     }
 
-    public TextField getUrlBar() {
-        return urlBar;
-    }
-
-    public Button getDownload() {
-        return download;
-    }
-
-    public List<String> getUndo() {
-        return undo;
-    }
-
-    public List<String> getRedo() {
-        return redo;
-    }
-
-    public String getCurrentUrl() {
-        return currentUrl;
-    }
-
-    public TabList getList() {
-        return list;
-    }
 }

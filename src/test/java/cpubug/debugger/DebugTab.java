@@ -1,4 +1,4 @@
-package me.david.sploty4.debugger;
+package cpubug.debugger;
 
 import javafx.scene.control.Tab;
 import lombok.Getter;
