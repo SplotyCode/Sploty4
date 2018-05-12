@@ -1,5 +1,6 @@
 package me.david.sploty4.debugger;
 
+import javafx.collections.ListChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
@@ -35,6 +36,10 @@ public class Console extends DebugTab {
         comboBox.getCheckModel().check(Level.WARNING);
         comboBox.getCheckModel().check(Level.CONFIG);
 
+        comboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<? super Level>)  change -> {
+            generateMessages();
+        });
+
         javaScirpt.setOnAction(event -> generateMessages());
         splotyLog.setOnAction(event -> generateMessages());
 
@@ -57,7 +62,7 @@ public class Console extends DebugTab {
                 StackTraceElement element = Thread.currentThread().getStackTrace()[6];
                 MessageEntry entry = new MessageEntry(logRecord.getMessage(), logRecord.getLevel(), MessageType.LOGGING,  element.getFileName() + ":" + element.getLineNumber(), logRecord.getMillis());
                 messages.add(entry);
-                if (((entry.getType() == MessageType.LOGGING && splotyLog.isSelected()) || (entry.getType() == MessageType.JAVASCRIPT && javaScirpt.isSelected())) && comboBox.getItems().contains(entry.getLevel())) {
+                if (((entry.getType() == MessageType.LOGGING && splotyLog.isSelected()) || (entry.getType() == MessageType.JAVASCRIPT && javaScirpt.isSelected())) && comboBox.getItemBooleanProperty(entry.getLevel()).getValue()) {
                     textArea.appendText(format.format(entry.time) + "[" + entry.getType().name() + "] [" + entry.level.getName() + "] " + entry.getMessage() + " | " + entry.getExtra() + "\n");
                 }
             }
@@ -84,7 +89,7 @@ public class Console extends DebugTab {
     private void generateMessages() {
         StringBuilder builder = new StringBuilder();
         for (MessageEntry entry : messages) {
-            if (((entry.getType() == MessageType.LOGGING && splotyLog.isSelected()) || (entry.getType() == MessageType.JAVASCRIPT && javaScirpt.isSelected())) && comboBox.getItems().contains(entry.getLevel())) {
+            if (((entry.getType() == MessageType.LOGGING && splotyLog.isSelected()) || (entry.getType() == MessageType.JAVASCRIPT && javaScirpt.isSelected())) && comboBox.getItemBooleanProperty(entry.level).getValue()) {
                 builder.append(format.format(entry.time)).
                         append("[").
                         append(entry.getType().name()).
