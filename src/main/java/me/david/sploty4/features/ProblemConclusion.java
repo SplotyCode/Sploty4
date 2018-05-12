@@ -48,8 +48,8 @@ public class ProblemConclusion {
             messageCol.setCellValueFactory(new PropertyValueFactory<>("Message"));
             TableColumn actionCol = new TableColumn("Action");
             actionCol.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
-
             actionCol.setCellFactory(new ProblemCellFactory());
+
             table.getColumns().addAll(typeCol, messageCol, actionCol);
             table.setItems(FXCollections.observableList(errorReporter.getErrors()));
             box.setCenter(table);

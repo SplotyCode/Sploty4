@@ -10,9 +10,13 @@ public class ToolGroup extends MenuGroup {
 
     public ToolGroup(Window window) {
         super(window, "Tool");
-        add("View-Source", (event) -> {
-            if(!window.getCurrentTab().getCurrentUrl().startsWith("view-source:"))
+        add("View-Source", event -> {
+            //todo else send notification
+            if(!window.getCurrentTab().isViewSource())
                 window.getCurrentTab().openNew("view-source:" + window.getCurrentTab().getCurrentUrl(), false);
         }, new KeyCodeCombination(KeyCode.U, KeyCombination.CONTROL_DOWN));
+
+        add("Debugger", event -> window.getCurrentTab().getDebugger().toggle(),
+                new KeyCodeCombination(KeyCode.F12));
     }
 }

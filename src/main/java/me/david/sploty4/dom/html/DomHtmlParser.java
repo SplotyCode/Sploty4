@@ -66,7 +66,7 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser> {
     }
 
     public void setCurrentParent(Node currentParent) {
-        Sploty.getLogger().debug("Set Parent: " + currentParent.getName());
+        //Sploty.getLogger().debug("Set Parent: " + currentParent.getName());
         this.currentParent = currentParent;
     }
 

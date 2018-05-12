@@ -1,26 +1,23 @@
 package me.david.sploty4.gui.tab;
 
 import javafx.application.Platform;
-import javafx.geometry.Point2D;
+import javafx.geometry.Orientation;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 import me.david.sploty4.Sploty;
+import me.david.sploty4.debugger.Debugger;
 import me.david.sploty4.document.Document;
 import me.david.sploty4.document.other.ErrorDocument;
 import me.david.sploty4.document.other.ViewSourceDocument;
 import me.david.sploty4.features.DownloadManager;
 import me.david.sploty4.features.History;
-import me.david.sploty4.gui.Window;
 import me.david.sploty4.io.Connection;
 import me.david.sploty4.util.FXUtil;
-import me.david.sploty4.util.ListUtil;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLPeerUnverifiedException;
@@ -37,13 +34,17 @@ public class BrowserTab extends Tab implements TabHandler {
     private Label label;
     private Document document;
     private Connection connection;
+    @Getter private boolean viewSource;
+
     private BorderPane main, addressBar;
     private HBox toolBox = new HBox();
+    @Getter private SplitPane split = new SplitPane();
     private TextField urlBar = new TextField();
     private Button download = new Button();
     private Button go = new Button();
     private HBox left = new HBox();
     private Button secure = new Button();
+
     private Button undoBut = new Button();
     private Button redoBut = new Button();
     private List<String> undo = new ArrayList<String>(){
@@ -80,8 +81,11 @@ public class BrowserTab extends Tab implements TabHandler {
     };
     private ContextMenu redoMenu = new ContextMenu();
     private ContextMenu undoMenu = new ContextMenu();
+
     private String currentUrl;
     private History.HistoryEntry currentHistory;
+
+    @Getter @Setter private Debugger debugger;
 
     private void updateMenus(){
         redoMenu.getItems().clear();
@@ -101,6 +105,8 @@ public class BrowserTab extends Tab implements TabHandler {
         addressBar.setCenter(urlBar);
         setContextMenu(new TabContextMenu(this));
         urlBar.setOnAction(event -> openNew(urlBar.getText(), false));
+
+        debugger = new Debugger(this);
 
         DownloadManager downloadManager = Sploty.getInstance().getDownloadManager();
         FXUtil.setImage(download, downloadManager.isError()?"/icons/downloaderror.png":downloadManager.isActive()?"/icons/downloadsinakktiv.png":downloadManager.isError()?"/icons/downloaderror.png":"/icons/downloads.png");
@@ -138,7 +144,9 @@ public class BrowserTab extends Tab implements TabHandler {
         addressBar.setTop(null);
 
         main.setTop(addressBar);
-        setContent(main);
+        split.getItems().addAll(main);
+        split.setOrientation(Orientation.VERTICAL);
+        setContent(split);
         setOnClosed(event -> {
             if(list.getTabs().size() == 0)
                 list.getWindow().getStage().close();
@@ -226,9 +234,9 @@ public class BrowserTab extends Tab implements TabHandler {
     }
 
     private void load(String url) {
+        viewSource = false;
         FXUtil.setImage(secure, "/icons/load/waiting.gif");
         secure.setContextMenu(null);
-        boolean viewSource = false;
         if(url.startsWith("view-source:")){
             viewSource = true;
             url = url.substring(12);

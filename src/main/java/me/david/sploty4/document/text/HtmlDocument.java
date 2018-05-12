@@ -42,7 +42,7 @@ public class HtmlDocument implements Document {
         //TODO: replace timer with a real profiler (multiple section etc)
         Timer timer = new Timer().start();
         parser.parse(content);
-        System.out.println("Html parsing took: " + timer.getDelay() + "ms");
+        Sploty.getLogger().info("Html parsing took: " + timer.getDelay() + "ms");
         html = parser.getBase();
 
         //ignore infos??

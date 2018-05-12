@@ -17,7 +17,7 @@ public class SplotyLogger {
         LogManager.getLogManager().reset();
         Logger root = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
         this.logger = root;
-        FileHandler txt = null;
+        FileHandler txt;
         try {
             String filename = new SimpleDateFormat("dd MM yyyy").format(new Date()) + "-1";
             File logdir = new File(Sploty.getDirectory(), "Logs/");
@@ -84,6 +84,7 @@ public class SplotyLogger {
         return this;
     }
 
+    //TODO debug mode?
     public SplotyLogger debugWarn(String debug){
         warn(debug);
         return this;
