@@ -31,7 +31,6 @@ import java.util.List;
 public class BrowserTab extends Tab implements TabHandler {
 
     @Getter private TabList list;
-    private Label label;
     @Getter private Document document;
     @Getter private Connection connection;
     @Getter private boolean viewSource;
@@ -98,8 +97,6 @@ public class BrowserTab extends Tab implements TabHandler {
 
     public BrowserTab(TabList list, String url) {
         this.list = list;
-        label = new Label();
-        setGraphic(label);
         main = new BorderPane();
         addressBar = new BorderPane();
         addressBar.setCenter(urlBar);
@@ -310,24 +307,20 @@ public class BrowserTab extends Tab implements TabHandler {
         }
     }
 
-    public Label getLabel() {
-        return label;
-    }
-
-    private Rectangle2D getAbsoluteRect(Tab tab) {
-        Control node = ((BrowserTab) tab).getLabel();
+    /*private Rectangle2D getAbsoluteRect(Tab tab) {
+        Control node = ((BrowserTab) tab).;
         return getAbsoluteRect(node);
-    }
+    }*/
 
     @Override
     public void setTitle(String title) {
         if(currentHistory != null) currentHistory.setTitle(title);
-        Platform.runLater(() -> label.setText(title));
+        Platform.runLater(() -> setText(title));
     }
 
     @Override
     public String getTitle() {
-        return label.getText();
+        return getText();
     }
 
     @Override

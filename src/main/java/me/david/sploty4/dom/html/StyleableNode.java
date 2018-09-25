@@ -1,5 +1,6 @@
 package me.david.sploty4.dom.html;
 
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
 import me.david.sploty4.dom.css.CSSRule;
@@ -39,7 +40,7 @@ public class StyleableNode extends Node {
     }
 
     public StyleableNode getLastChild(){
-        for(Node node : getChilds())
+        for(Node node : Lists.reverse(getChilds()))
             if(node instanceof StyleableNode)
                 return (StyleableNode) node;
         return null;

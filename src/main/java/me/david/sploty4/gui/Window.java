@@ -2,7 +2,6 @@ package me.david.sploty4.gui;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
-import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -53,10 +52,11 @@ public class Window implements FileComponent {
     private void buildGui() {
         tabsPane.getChildren().addAll(tabBar);
         VBox box = new VBox();
+        box.getStylesheets().add("/themes/external/flatred.css");
         box.getChildren().addAll(menuBar, tabsPane);
         scene = new Scene(box, 400, 350);
         shortcurts = new MainShortcuts(this);
-        scene.setFill(Color.OLDLACE);
+        //scene.setFill(Color.OLDLACE);
         stage.setScene(scene);
         stage.setTitle("Sploty4 WebBrowser - " + AppConstants.VERSION);
         stage.setFullScreenExitHint("Press Esc to leave Fullscreen");

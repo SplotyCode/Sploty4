@@ -45,6 +45,7 @@ public class DraggableBar extends TabPane {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //getStylesheets().add("/themes/black.css");
     }
 
     private class DraggableBarSkin extends TabPaneSkin {

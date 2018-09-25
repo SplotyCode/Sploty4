@@ -1,0 +1,26 @@
+.root {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Tahoma";
+    -fx-base: #DFB951;
+    -fx-background: #A78732;
+    -fx-focus-color: #B6A678;
+}
+button{
+    -fx-text-fill: #006464;
+    -fx-background-color: #DFB951;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+    -fx-border-color: rgb(49, 89, 23);
+}
+.slider{
+    -fx-border-color: white;
+    -fx-border-style: dashed;
+    -fx-border-width: 2;
+}
+.borders{
+    -fx-border-color : rgb(103, 100, 78);
+    -fx-border-style : dotted;
+    -fx-border-width : 1.5;
+    -fx-border-insets: -5;
+}
