@@ -30,10 +30,10 @@ public class Debugger extends Pane {
         getChildren().add(tabs);
     }
 
-    public DebugTab getDebugTabByClass(Class<? extends DebugTab> clazz) {
+    public <T extends DebugTab> T getDebugTabByClass(Class<T> clazz) {
         for (final DebugTab tab : debugTabs)
             if (tab.getClass().equals(clazz))
-                return tab;
+                return (T) tab;
 
         Sploty.getLogger().warn("Count not find Debugging Tab named: '" + clazz.getSimpleName() + "'");
         return null;
