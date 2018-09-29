@@ -1,5 +1,6 @@
 package me.david.sploty4.dom.html;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import me.david.sploty4.document.SyntaxException;
@@ -14,26 +15,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@EqualsAndHashCode
 public class Node implements Cloneable {
 
     @Getter private final String name;
-    @Getter private final long id;
 
     @IgnorePrint private Node parent;
     private List<Node> childs;
 
     private Set<Attribute> attributes;
 
-    public Node(String name, long id) {
+    public Node(String name) {
         this.name = name;
-        this.id = id;
         childs = new ArrayList<>();
         attributes = new HashSet<>();
     }
 
-    public Node(String name, long id, Node parent) {
+    public Node(String name, Node parent) {
         this.name = name;
-        this.id = id;
         this.parent = parent;
         childs = new ArrayList<>();
         attributes = new HashSet<>();
@@ -86,12 +85,7 @@ public class Node implements Cloneable {
 
     public Node getNodeBefore() {
         if (parent == null) return null;
-        Node before = null;
-        for (final Node node : parent.getChilds()) {
-            if(node.getId() == id) return before;
-            before = node;
-        }
-        return null;
+        return parent.getChilds().get(parent.getChilds().indexOf(this)  - 1);
     }
 
     public List<Node> getParents() {
@@ -126,16 +120,4 @@ public class Node implements Cloneable {
         return TagHelper.canSelfClose(name);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Node node = (Node) o;
-
-        if (!getName().equals(node.getName())) return false;
-        if (getParent() != null ? !getParent().equals(node.getParent()) : node.getParent() != null) return false;
-        if (getChilds() != null ? !getChilds().equals(node.getChilds()) : node.getChilds() != null) return false;
-        return getAttributes() != null ? getAttributes().equals(node.getAttributes()) : node.getAttributes() == null;
-    }
 }

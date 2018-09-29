@@ -3,9 +3,19 @@ package me.david.sploty4.dom.html.nodes;
 import me.david.sploty4.dom.html.DomHtmlParser;
 import me.david.sploty4.dom.html.Node;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum Nodes {
 
     ;
+
+    private static Map<String, Nodes> map = new HashMap<>();
+
+    static {
+        for (Nodes node : values())
+            map.put(node.name(), node);
+    }
 
     private final Node node;
 
@@ -21,11 +31,11 @@ public enum Nodes {
         return node.clone();
     }
 
-    public static Node byName(String name, DomHtmlParser parser){
-        for(Nodes node : values())
-            if(node.getNode().getName().equals(name))
-                return node.getNewNode();
-        parser.setCurrentTagID(parser.getCurrentTagID()+1);
-        return new Node(name, parser.getCurrentTagID());
+    public static Node byName(String name) {
+        Nodes objNode = map.get(name);
+        if (objNode == null) {
+            return new Node(name);
+        }
+        return objNode.getNewNode();
     }
 }

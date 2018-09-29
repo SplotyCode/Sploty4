@@ -25,12 +25,6 @@ public class DomHtmlParser implements DomParser<Node, String, DomHtmlParser> {
     @Getter @Setter private boolean skipThis = false, rehandle = false;
     @Getter private Node base = new BaseNode(), currentParent = base;
     @Getter @Setter private DomErrorReporter errorReporter = null;
-    @Getter @Setter private long currentTagID = 0;
-
-    public long getNewTagID() {
-        currentTagID++;
-        return currentTagID;
-    }
 
     @Override
     public Node parse(String input) {

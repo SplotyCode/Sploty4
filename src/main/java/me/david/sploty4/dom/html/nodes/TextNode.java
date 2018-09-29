@@ -10,11 +10,11 @@ import java.util.Set;
 public class TextNode extends Node {
 
     public TextNode(String name) {
-        super(name, -1);
+        super(name);
     }
 
     public TextNode(String name, Node parent) {
-        super(name, -1, parent);
+        super(name, parent);
     }
 
     @Override

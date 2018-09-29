@@ -7,13 +7,13 @@ public class DocTypeNode extends Node {
 
     @Getter private final String doctype;
 
-    public DocTypeNode(String doctype, long id) {
-        super("Doctype", id);
+    public DocTypeNode(String doctype) {
+        super("Doctype");
         this.doctype = doctype;
     }
 
-    public DocTypeNode(String doctype, long id, Node parent) {
-        super("Doctype", id, parent);
+    public DocTypeNode(String doctype, Node parent) {
+        super("Doctype", parent);
         this.doctype = doctype;
     }
 
