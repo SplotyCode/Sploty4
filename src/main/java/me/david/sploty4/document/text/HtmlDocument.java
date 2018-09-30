@@ -8,6 +8,7 @@ import me.david.sploty4.dom.DomErrorReporter;
 import me.david.sploty4.dom.html.Node;
 import me.david.sploty4.dom.html.DomHtmlParser;
 import me.david.sploty4.dom.html.StyleableNode;
+import me.david.sploty4.dom.html.nodes.TextNode;
 import me.david.sploty4.features.ProblemConclusion;
 import me.david.sploty4.gui.tab.TabHandler;
 import me.david.sploty4.io.Connection;
@@ -77,8 +78,9 @@ public class HtmlDocument implements Document {
     }
 
     private List<Node> collectNodes(Node node, List<Node> list) {
+        if (node instanceof TextNode) return list;
+        list.add(node);
         for (Node child : node.getChilds()) {
-            list.add(child);
             list = collectNodes(child, list);
         }
         return list;
