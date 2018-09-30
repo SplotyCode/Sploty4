@@ -40,6 +40,7 @@ public class Node implements Cloneable {
     }
 
     public void postDom(TabHandler tab) {}
+    public void postLoad(TabHandler tab) {}
 
     public Set<Attribute> getAttributes() {
         return attributes;

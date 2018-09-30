@@ -41,6 +41,8 @@ public class StyleableNode extends Node {
         layout.layout(this);
     }
 
+    public void render() {}
+
     public StyleableNode getFirstChild(){
         for(Node node : getChilds())
             if(node instanceof StyleableNode)
