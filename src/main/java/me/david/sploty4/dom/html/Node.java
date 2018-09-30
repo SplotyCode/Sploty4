@@ -8,6 +8,7 @@ import me.david.sploty4.dom.html.attriute.Attribute;
 import me.david.sploty4.dom.html.attriute.StandardAttribute;
 import me.david.sploty4.dom.html.attriute.ValueAttribute;
 import me.david.sploty4.dom.html.nodes.TagHelper;
+import me.david.sploty4.gui.tab.TabHandler;
 import me.david.sploty4.objects.IgnorePrint;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Node implements Cloneable {
     @Getter private final String name;
 
     @IgnorePrint private Node parent;
-    private List<Node> childs;
+    protected List<Node> childs;
 
     private Set<Attribute> attributes;
 
@@ -37,6 +38,8 @@ public class Node implements Cloneable {
         childs = new ArrayList<>();
         attributes = new HashSet<>();
     }
+
+    public void postDom(TabHandler tab) {}
 
     public Set<Attribute> getAttributes() {
         return attributes;
